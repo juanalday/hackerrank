@@ -4,6 +4,7 @@ add_executable(implementation
   halloween_sale.cpp
   minimum_distances.cpp
   modified_kaprekar_numbers.cpp
+  the_time_in_words.cpp
 )
 target_link_libraries(implementation gmock gtest gtest_main)
 gtest_discover_tests(implementation)
