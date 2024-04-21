@@ -1,6 +1,4 @@
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
-#include "gmock/gmock-matchers.h"
 
 #include <algorithm>
 #include <numeric>
@@ -48,7 +46,12 @@ TEST(between_two_sets, case_0)
     EXPECT_EQ(3, getTotalX({2,4}, { 16, 32, 96}));
 }
 
-TEST(between_two_sets, case_1)
+TEST(between_two_sets, case_7)
 {
-    EXPECT_EQ(2, getTotalX({3,4 }, {24, 48}));
+    EXPECT_EQ(8, getTotalX({1 }, {72,48}));
+}
+
+TEST(between_two_sets, case_8)
+{
+    EXPECT_EQ(2, getTotalX({ 3,4 }, { 24, 48 }));
 }
