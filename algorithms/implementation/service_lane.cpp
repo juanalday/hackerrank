@@ -1,15 +1,12 @@
 #include "gtest/gtest.h"
 
+#include <algorithm>
 #include <vector>
 
 std::vector<int> serviceLane(std::vector<int> const& width, std::vector<std::vector<int>> const& cases) {
-	std::vector<int> ret;
-	for (auto const& c : cases)
-	{
-		auto itStart = std::next(width.begin(), c[0]);
-		auto itEnd = std::next(width.begin(), 1+c[1]);
-		ret.push_back(*std::min_element(itStart, itEnd));
-	}
+	std::vector<int> ret(width.size());
+	std::transform(cases.begin(), cases.end(), ret.begin(), 
+		[&width](auto const& c){return *std::min_element(std::next(width.begin(), c[0]), std::next(width.begin(), 1+c[1])); });
 	return ret;
 }
 
