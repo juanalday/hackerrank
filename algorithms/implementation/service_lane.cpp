@@ -4,7 +4,7 @@
 #include <vector>
 
 std::vector<int> serviceLane(std::vector<int> const& width, std::vector<std::vector<int>> const& cases) {
-	std::vector<int> ret(width.size());
+	std::vector<int> ret(cases.size());
 	std::transform(cases.begin(), cases.end(), ret.begin(), 
 		[&width](auto const& c){return *std::min_element(std::next(width.begin(), c[0]), std::next(width.begin(), 1+c[1])); });
 	return ret;

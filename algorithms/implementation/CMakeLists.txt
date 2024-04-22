@@ -4,6 +4,7 @@ add_executable(implementation
   bigger_is_greater.cpp
   chocolate_feast.cpp
   halloween_sale.cpp
+  lisas_workbook.cpp
   minimum_distances.cpp
   modified_kaprekar_numbers.cpp
   service_lane.cpp
