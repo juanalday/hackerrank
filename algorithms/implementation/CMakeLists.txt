@@ -2,10 +2,13 @@ add_executable(implementation
   beautiful_triplets.cpp
   between_two_sets.cpp
   bigger_is_greater.cpp
+  cavity_map.cpp
   chocolate_feast.cpp
+  fair_rations.cpp
   flatland_space_stations.cpp
   halloween_sale.cpp
   lisas_workbook.cpp
+  manasa_and_stones.cpp
   minimum_distances.cpp
   modified_kaprekar_numbers.cpp
   service_lane.cpp
