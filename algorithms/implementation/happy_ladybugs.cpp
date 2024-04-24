@@ -4,8 +4,8 @@
 #include <string>
 
 std::string happyLadybugs(std::string b) {
-	if (b.empty()) return "YES";
 
+	if (b.empty()) return "YES";
 
 	std::string uniques(b);
 	std::sort(uniques.begin(), uniques.end());
@@ -17,7 +17,7 @@ std::string happyLadybugs(std::string b) {
 	}
 	for (auto x : uniques)
 	{
-		if (count(b.begin(), b.end(), x)  == 1)
+		if (count(b.begin(), b.end(), x) == 1)
 			return "NO";
 	}
 	if (canMove)
@@ -36,67 +36,6 @@ std::string happyLadybugs(std::string b) {
 		it = adjacent_find(it + 1, b.end(), std::not_equal_to<>());
 	}
 
-	return "YES";
-	// Now I can remove the '_' from the original string, I no longer need them for this part
-	b.erase(remove(b.begin(), b.end(), '_'), b.end());
-	auto i2 = std::adjacent_find(b.begin(), b.end(), std::less<char>());
-	if (i2 == b.end())
-		return "YES";
-	return "NO";
-
-	if (b.empty()) return "YES";
-  
-    b.erase(std::remove(b.begin(), b.end(), '_'), b.end());
-
-    if (canMove) {
-        std::sort(b.begin(), b.end());
-        return std::adjacent_find(b.begin(), b.end(), std::not_equal_to<>()) == b.end() ? "YES" : "NO";
-    } else {
-        for (int i = 0; i < b.size(); ) {
-            int start = i++;
-            while (i < b.size() && b[i] == b[start]) ++i;
-            if (i - start == 1) return "NO";
-        }
-        return "YES";
-    }
-
-
-	// Sort the bugs to group similar ones together, making it easier to count.
-	std::string orig(b);
-	std::sort(b.begin(), b.end());
-
-	// Check for the ability to move (presence of underscores).
-	if (!canMove && (orig != b))
-		return "NO";
-	char curr = '0';
-	int counter(0);
-	int minCounter(9);
-	bool isolatedBug(false);
-
-	for (auto x : b)
-	{
-		if (x == '_')
-			continue;
-
-		if (x == curr)
-		{
-			++counter;
-		}
-		else // they are different...
-		{
-			if (counter == 1)
-				isolatedBug = 1;
-			curr = x;
-			counter = 1; // This is the first element, , that is an odd number
-
-
-		}
-
-	}
-	if (counter == 1)
-		return "NO";
-	if ((counter > 1) && !canMove && (b != orig))
-		return "NO";
 	return "YES";
 
 }
