@@ -7,13 +7,14 @@ add_executable(implementation
   fair_rations.cpp
   flatland_space_stations.cpp
   halloween_sale.cpp
+  happy_ladybugs.cpp
   lisas_workbook.cpp
   manasa_and_stones.cpp
   minimum_distances.cpp
   modified_kaprekar_numbers.cpp
   service_lane.cpp
+  the_grid_search.cpp
   the_time_in_words.cpp
- 
- "the_grid_search.cpp")
+)
 target_link_libraries(implementation gmock gtest gtest_main)
 gtest_discover_tests(implementation)
