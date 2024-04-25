@@ -13,6 +13,7 @@ add_executable(implementation
   minimum_distances.cpp
   modified_kaprekar_numbers.cpp
   service_lane.cpp
+  strange_counter.cpp
   the_grid_search.cpp
   the_time_in_words.cpp
 )
