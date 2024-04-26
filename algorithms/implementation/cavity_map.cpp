@@ -7,12 +7,12 @@ std::vector<std::string> cavityMap(std::vector<std::string> grid) {
 
 	std::vector<std::string> ret(grid);
 
-	int len = grid.size();
+	size_t len = grid.size();
 
-	for (int r = 1; r < len-1; ++r)
+	for (size_t r = 1; r < len-1; ++r)
 	{
 		std::string const& row = grid[r];
-		for (int c = 1; c < len-1; ++c)
+		for (size_t c = 1; c < len-1; ++c)
 		{
 			auto value = row[c];
 			if ((value <= row[c - 1]) || (value <= row[c + 1])) // compare left and right...
