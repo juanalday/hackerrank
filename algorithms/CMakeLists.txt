@@ -1,2 +1,3 @@
-add_subdirectory(warmup)
 add_subdirectory(implementation)
+add_subdirectory(sorting)
+add_subdirectory(warmup)
