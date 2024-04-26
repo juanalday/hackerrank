@@ -33,7 +33,7 @@ int surfaceArea(std::vector<std::vector<int>> grid) {
 
 TEST(surfaceArea, sample0)
 {
-	EXPECT_EQ(1, surfaceArea({ {1} }));
+	EXPECT_EQ(6, surfaceArea({ {1} }));
 }
 
 TEST(surfaceArea, sample1)
@@ -43,7 +43,7 @@ TEST(surfaceArea, sample1)
 
 TEST(surfaceArea, case_0)
 {
-    EXPECT_EQ(1, surfaceArea({ {1} }));
+    EXPECT_EQ(6, surfaceArea({ {1} }));
 }
 
 TEST(surfaceArea, case_25)
