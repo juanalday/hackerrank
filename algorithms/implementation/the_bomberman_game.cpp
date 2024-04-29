@@ -591,6 +591,7 @@ TEST(bomberMan, case5)
 "OOOOO....OOOOOOOOOOOO....OO...OOOOOOOOO.OOOOO.OOO.O...O...OOO.OOOOOOOOO...OOO...O..OO.OO.O.OOO........OOOOOO.OOOO...O.....OO.OOOO.O.......OO.O.OOOOOOOOOOOOO.....OOOO.OOOOOOOO.......OO...O",
 "OOOOOO....OOOOOOOOOOOO..OO.....OOOOOOOOOOOOOOOOO.......O.OOOOOOOOOOOOOOO...O.......OOOO.....O...O.....OOOOO...OO.....OO.......OOOOOO......OOOOOOOOOOOOOOOOOOO.O.OOOOOOOOOOOOOOO.O...OOOO..." };
 	EXPECT_EQ(output, bomberMan(n, input));
+	EXPECT_EQ(output, blowTargetsExternal(blowTargetsExternal(input)));
 }
 
 TEST(bomberMan, case7)
@@ -985,7 +986,7 @@ TEST(bomberMan, case7)
 ".OOOOO...OOOOOOOO....O.OOO.O..O...OOO..OOOO....O....OOOOOOO...OOOOO..O..OO.OOOO....OO.O.......OOOOO..O...O...OO....OOOOOOOO.OO.O.OOOOO.O...O..OOO..OO.OOOOO..OOOOOOOOOOOOOOOOO...OO.OO....OOOOO...OOOOO",
 "..OOOOO.OOOOOOOOOO.OOOOOOOOOOOOO.OOOOOOOOOOO....O....OOOOOOO.OOOOO.......OOOOO...OOOOOOOO..O.OOOOOOOOOO.O....OO.....OOOOOO......OOOOO.......OOOOOOOO...OOO....OOOOOOOOOOOOOOO...OOOOO......OOO.....OOOO" };
 	EXPECT_EQ(output, bomberMan(n, input));
-	//EXPECT_EQ(output, blowTargets(blowTargets(input)));
+	EXPECT_EQ(output, blowTargetsExternal(blowTargetsExternal(input)));
 
 }
 
@@ -1809,17 +1810,20 @@ TEST(bomberMan, case24)
 
 TEST(bomberMan, case25)
 {
-	EXPECT_THAT(bomberMan(5, {
+	std::vector<std::string> const input{
 		".......",
 		"...O.O.",
 		"....O..",
 		"..O....",
 		"OO...OO",
-		"OO.O..." }),
-		ElementsAre(".......",
+		"OO.O..." };
+	std::vector<std::string> const output{
+		".......",
 		"...O.O.",
 		"...OO..",
 		"..OOOO.",
 		"OOOOOOO",
-		"OOOOOOO"));
+		"OOOOOOO" };
+	EXPECT_EQ(output, bomberMan(5, input));
+	EXPECT_EQ(output, blowTargetsExternal(blowTargetsExternal(input)));
 }
