@@ -10,6 +10,7 @@ add_executable(implementation
   flatland_space_stations.cpp
   halloween_sale.cpp
   happy_ladybugs.cpp
+  larrys_array.cpp
   lisas_workbook.cpp
   manasa_and_stones.cpp
   minimum_distances.cpp
@@ -19,6 +20,6 @@ add_executable(implementation
   the_bomberman_game.cpp
   the_grid_search.cpp
   the_time_in_words.cpp
- )
+)
 target_link_libraries(implementation gmock gtest gtest_main)
 gtest_discover_tests(implementation)

@@ -11,6 +11,8 @@ namespace {
 		{
 			auto rows = targets.size();
 			auto columns = targets.front().size();
+			// This mixes the step where we plant bombs in the whole grid 
+			// and then we blow up the previous bombs...
 			std::vector<std::string> ret(targets.size(), std::string(columns, 'O'));
 
 			for (int r = 0; r < rows; ++r)
