@@ -1,6 +1,7 @@
 add_executable(implementation
   3d_surface_area.cpp
   absolute_permutation.cpp
+  almost_sorted.cpp
   beautiful_triplets.cpp
   between_two_sets.cpp
   bigger_is_greater.cpp
