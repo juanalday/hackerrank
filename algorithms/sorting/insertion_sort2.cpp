@@ -15,13 +15,15 @@ std::vector<std::vector<int>> insertionSort2(std::vector<int> arr) {
 		int current = *it1;
 		
 		int j = i - 1;
-		while (j >= 0 && arr[j] > current) {
+		while (j >= 0) {
+			auto v2 = arr[j];
+			if (v2 <= current)
+				break;
 			arr[j + 1] = arr[j];
 			j--;
 		}
 		
 		arr[j + 1] = current;
-
 
 		ret.push_back(arr);
 	}
