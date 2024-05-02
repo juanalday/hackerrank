@@ -14,6 +14,7 @@ add_executable(implementation
   larrys_array.cpp
   lisas_workbook.cpp
   manasa_and_stones.cpp
+  matrix_layer_rotation.cpp
   minimum_distances.cpp
   modified_kaprekar_numbers.cpp
   service_lane.cpp
@@ -21,6 +22,6 @@ add_executable(implementation
   the_bomberman_game.cpp
   the_grid_search.cpp
   the_time_in_words.cpp
-)
+ )
 target_link_libraries(implementation gmock gtest gtest_main)
 gtest_discover_tests(implementation)
