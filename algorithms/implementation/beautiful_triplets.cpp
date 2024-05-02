@@ -1,3 +1,4 @@
+//https://www.hackerrank.com/challenges/beautiful-triplets/problem
 #include "gtest/gtest.h"
 
 #include <unordered_map>
