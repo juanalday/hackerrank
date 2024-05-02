@@ -9,6 +9,7 @@ add_executable(implementation
   chocolate_feast.cpp
   fair_rations.cpp
   flatland_space_stations.cpp
+  grading_students.cpp
   halloween_sale.cpp
   happy_ladybugs.cpp
   larrys_array.cpp
@@ -22,6 +23,6 @@ add_executable(implementation
   the_bomberman_game.cpp
   the_grid_search.cpp
   the_time_in_words.cpp
- )
+)
 target_link_libraries(implementation gmock gtest gtest_main)
 gtest_discover_tests(implementation)
