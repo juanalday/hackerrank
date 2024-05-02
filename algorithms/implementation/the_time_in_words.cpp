@@ -1,3 +1,5 @@
+//https://www.hackerrank.com/challenges/the-time-in-words/problem
+
 #include "gtest/gtest.h"
 
 #include <array>
