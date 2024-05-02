@@ -4,6 +4,6 @@ add_executable(sorting
   insertion_sort1.cpp 
   insertion_sort2.cpp
   intro_tutorial.cpp
-)
+ "running_time.cpp")
 target_link_libraries(sorting gmock gtest gtest_main)
 gtest_discover_tests(sorting)
