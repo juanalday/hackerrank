@@ -16,7 +16,7 @@ static constexpr std::vector<std::vector<std::vector<int>>> const computeMagicSq
         { {2, 7, 6}, {9, 5, 1}, {4, 3, 8} } 
     };
 }
-int costToConvert(const std::vector<std::vector<int>> const & s, std::vector<std::vector<int>> const& magic) {
+int costToConvert(std::vector<std::vector<int>> const & s, std::vector<std::vector<int>> const& magic) {
     int cost = 0;
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
