@@ -9,6 +9,7 @@ add_executable(implementation
   chocolate_feast.cpp
   fair_rations.cpp
   flatland_space_stations.cpp
+  forming_a_magic_square.cpp
   grading_students.cpp
   halloween_sale.cpp
   happy_ladybugs.cpp
