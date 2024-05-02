@@ -10,14 +10,10 @@ std::vector<std::vector<int>> doMatrixRotation(std::vector<std::vector<int>> mat
 
 	auto topRow = matrix.begin();
 	auto bottomRow = prev(matrix.end());
-	auto lastRowIndex = rows - 1;
-	auto lastColumnIndex = columns - 1;
 
 	auto layers = std::min(rows / 2, columns / 2);
 	auto columnsToShift = columns - 1; // If originally we have 7 columns, first move will shift 6 elements to the left
 	auto rowsToShift = rows - 1; // IF originally we have 5 rows, second move will shift 4 elements upwards in the right-most column
-
-	auto cellsInLayer = rows * columns;
 
 	for (int i = 0; i < layers; ++i)
 	{
@@ -62,7 +58,6 @@ std::vector<std::vector<int>> doMatrixRotation(std::vector<std::vector<int>> mat
 
 		rowsToShift -= 2;
 		columnsToShift -= 2;
-
 	}
 	return matrix;
 }
