@@ -1,9 +1,11 @@
+// https://www.hackerrank.com/challenges/magic-square-forming/problem
+
 #include <gtest/gtest.h>
 
 #include <cmath>
 #include <vector>
 
-static constexpr std::vector<std::vector<std::vector<int>>> const computeMagicSquares()
+static std::vector<std::vector<std::vector<int>>> computeMagicSquares()
 {
     return { 
         { {8, 1, 6}, {3, 5, 7}, {4, 9, 2} },
