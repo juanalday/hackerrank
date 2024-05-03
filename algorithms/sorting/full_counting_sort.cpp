@@ -13,14 +13,14 @@ namespace {
 		std::string sortData(std::vector<std::vector<std::string>> arr) {
 			std::multimap<int, std::string> counter;
 			for_each(arr.begin(), next(arr.begin(), arr.size() / 2), [](auto& data) {data.back() = "-"; });
-			for_each(arr.begin(), arr.end(), [&counter](auto& pairVec) {counter.insert({ std::stoi(pairVec.front()), std::move(pairVec.back()) }); });
+			for_each(arr.begin(), arr.end(), [&counter](auto& pairVec) {counter.insert({ std::stoi(pairVec.front()), std::move(pairVec.back()) });});
 			std::ostringstream buffer;
 			for_each(counter.begin(), prev(counter.end()), [&buffer](auto const& pair) {buffer << pair.second << ' '; });
 			buffer << prev(counter.end())->second;
 			return buffer.str();
 		}
 
-		void countingSort(std::vector<std::vector<std::string>> const& arr) {
+		void countSort(std::vector<std::vector<std::string>> const& arr) {
 			std::cout << sortData(arr) << std::endl;
 		}
 	}
