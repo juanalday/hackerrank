@@ -9,6 +9,6 @@ add_executable(sorting
   intro_tutorial.cpp
   quicksort_partition.cpp
   running_time.cpp
- "closest_numbers.cpp")
+ "closest_numbers.cpp" "find_the_median.cpp")
 target_link_libraries(sorting gmock gtest gtest_main)
 gtest_discover_tests(sorting)
