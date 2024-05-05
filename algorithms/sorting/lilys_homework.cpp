@@ -6,37 +6,37 @@
 #include <numeric>
 #include <vector>
 
-auto countSwaps(std::vector<int> data, bool reverseData = false) {
-	auto sorted(data);
-	sort(sorted.begin(), sorted.end());
+namespace {
+	auto countSwaps(std::vector<int> data, bool reverseData = false) {
+		auto sorted(data);
+		sort(sorted.begin(), sorted.end());
 
-	if (reverseData)
-		reverse(data.begin(), data.end());
+		if (reverseData)
+			reverse(data.begin(), data.end());
 
-	std::unordered_map<int, int> indexArray;
-	for (int i = 0; i < data.size(); ++i) {
-		indexArray[data[i]] = i;
+		std::unordered_map<int, int> indexArray;
+		transform(data.begin(), data.end(), inserter(indexArray, indexArray.end()),[idx = 0](int value) mutable {return std::make_pair(value, idx++); });
+		
+		auto counter = 0;
+		for (auto i = 0; i < sorted.size(); ++i) {
+			auto expected = sorted[i]; // This is the value I would normally expect to find in data if it was sorted
+			auto& original = data[i]; // Reference to the original data item in position [i]
+			if (expected == original)
+				continue;
+			auto expectedPos = indexArray[expected];
+			indexArray[original] = expectedPos;
+			std::swap(original, data[expectedPos]);
+			++counter;
+		}
+		return counter;
+	};
+	int lilysHomework(std::vector<int> arr) {
+		// This exercise is not about quicksort, but about finding the minimum number of swaps...
+		// // If you just use your own flavor of quicksort and count the swaps, you will never get the correct number.
+		// The trick is to reverse the contents of the original vector, NOT the sorted vector from less<int>() to greater<int>()
+		// This is why so many people get this exercise wrong...
+		return std::min(countSwaps(arr), countSwaps(arr, true));
 	}
-
-	auto counter = 0;
-	for (auto i = 0; i < sorted.size(); ++i) {
-		auto expected = sorted[i]; // This is the value I would normally expect to find in data if it was sorted
-		auto& original = data[i]; // Reference to the original data item in position [i]
-		if (expected == original)
-			continue;
-		auto expectedPos = indexArray[expected];
-		indexArray[original] = expectedPos;
-		std::swap(original, data[expectedPos]);
-		++counter;
-	}
-	return counter;
-};
-int lilysHomework(std::vector<int> arr) {
-	// This exercise is not about quicksort, but about finding the minimum number of swaps...
-	// // If you just use your own flavor of quicksort and count the swaps, you will never get the correct number.
-	// The trick is to reverse the contents of the original vector, NOT the sorted vector from less<int>() to greater<int>()
-	// This is why so many people get this exercise wrong...
-	return std::min(countSwaps(arr), countSwaps(arr, true));
 }
 
 TEST(lilysHomework, example)

@@ -1,4 +1,5 @@
 add_executable(sorting
+  activity_notifications.cpp
   big_sorting.cpp
   closest_numbers.cpp
   correctness_invariant.cpp
