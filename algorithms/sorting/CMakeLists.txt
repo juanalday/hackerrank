@@ -7,6 +7,7 @@ add_executable(sorting
   counting_sort2.cpp
   find_the_median.cpp
   full_counting_sort.cpp
+  insertion_sort.cpp
   insertion_sort1.cpp 
   insertion_sort2.cpp
   intro_tutorial.cpp
