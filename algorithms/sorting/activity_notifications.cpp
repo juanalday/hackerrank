@@ -5,6 +5,7 @@
 #include <array>
 #include <algorithm>
 #include <iterator>
+#include <utility>
 #include <vector>
 
 namespace {
@@ -17,25 +18,25 @@ namespace {
 		auto count = 0;
 
 		std::array<int, 201> frequencies{ 0 };
-		std::for_each(expenditure.begin(), next(expenditure.begin(), d), [&frequencies](int num) {++frequencies[num]; });
+		std::for_each(expenditure.begin(), std::next(expenditure.begin(), d), [&frequencies](int num) {++frequencies[num]; });
 
 		bool isEven = (expenditure.size() % 2) == 0;
 
-		for(auto it = next(expenditure.begin(), d); it < expenditure.end(); ++it)
+		for(auto it = std::next(expenditure.begin(), d); it < expenditure.end(); ++it)
 		{
-			auto it1 = find_if(frequencies.begin(), frequencies.end(), [d, sum = 0](int freq) mutable {sum += freq; return 2 * sum > d; });
-			auto median = distance(frequencies.begin(), it1);
+			auto it1 = std::find_if(frequencies.begin(), frequencies.end(), [d, sum = 0](int freq) mutable {sum += freq; return 2 * sum > d; });
+			auto median = std::distance(frequencies.begin(), it1);
 			if (isEven)
 			{
-				auto it2 = find_if(frequencies.begin(), frequencies.end(), [d, sum = 0](int freq) mutable {sum += freq; return 2 * sum > (d - 1); });
-				median += distance(frequencies.begin(), it2);
+				auto it2 = std::find_if(frequencies.begin(), frequencies.end(), [d, sum = 0](int freq) mutable {sum += freq; return 2 * sum > (d - 1); });
+				median += std::distance(frequencies.begin(), it2);
 			}
 			else
 				median *= 2;
 			if (*it >= median)
 				++count;
 
-			--frequencies[*prev(it, d)];
+			--frequencies[*std::prev(it, d)];
 			++frequencies[*it]; // For the next calculation
 
 		}
