@@ -1,5 +1,8 @@
+// https://www.hackerrank.com/challenges/big-sorting/problem
+
 #include <gtest/gtest.h>
 #include "gmock/gmock-matchers.h"
+
 #include <string>
 #include <vector>
 
@@ -7,10 +10,14 @@ using ::testing::ElementsAre;
 
 std::vector<std::string> bigSorting(std::vector<std::string> unsorted) 
 {
-
 	std::sort(unsorted.begin(), unsorted.end(), [](auto const& a, auto const& b)
 		{ return (a.size() == b.size()) ? a < b : (a.size() < b.size()); });
 	return unsorted;
+}
+
+TEST(bigSorting, example)
+{
+	EXPECT_THAT(bigSorting({ "1", "200", "150", "3" }), ElementsAre("1", "3", "150", "200"));
 }
 
 TEST(bigSorting, sample0)
