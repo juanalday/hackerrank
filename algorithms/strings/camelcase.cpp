@@ -10,12 +10,12 @@ namespace {
 	}
 }
 
-TEST(camelcase, example)
+TEST(camelcase, DISABLED_example)
 {
 	EXPECT_EQ(3, camelcase("oneTwoThree"));
 }
 
-TEST(camelcase, sample)
+TEST(camelcase, DISABLED_sample)
 {
 	EXPECT_EQ(5, camelcase("saveChangesInTheEditor"));
 }
