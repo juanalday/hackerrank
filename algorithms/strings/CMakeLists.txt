@@ -3,7 +3,10 @@ add_executable(algorithm_strings
   camelcase.cpp
   hackerrank_in_a_string.cpp
   mars_exploration.cpp
+  pangrams.cpp
   strong_password.cpp 
-  two_characters.cpp)
+  two_characters.cpp
+  weighted_uniform_string.cpp
+)
 target_link_libraries(algorithm_strings gmock gtest gtest_main)
 gtest_discover_tests(algorithm_strings)
