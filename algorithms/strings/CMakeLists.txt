@@ -2,6 +2,6 @@ add_executable(algorithm_strings
   caesar_cipher.cpp
   camelcase.cpp
   strong_password.cpp 
-  two_characters.cpp)
+  two_characters.cpp "mars_exploration.cpp")
 target_link_libraries(algorithm_strings gmock gtest gtest_main)
 gtest_discover_tests(algorithm_strings)

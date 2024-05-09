@@ -7,6 +7,7 @@
 #include <cctype>
 #include <numeric>
 #include <string>
+#include <utility>
 
 namespace {
 
@@ -14,7 +15,7 @@ namespace {
 		std::array<char, 26> rotated;
 		k = k % 26; // To avoid overflow...
 		std::iota(rotated.begin(), rotated.end() , 'a');
-		std::rotate(rotated.begin(), next(rotated.begin(), k), rotated.end());
+		std::rotate(rotated.begin(), std::next(rotated.begin(), k), rotated.end());
 		for (auto& x : s)
 		{
 			if (std::islower(static_cast<unsigned char>(x)))
