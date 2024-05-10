@@ -1,0 +1,5 @@
+add_executable(problem_solving_basic
+  longest_subarray.cpp
+  nearly_similar_rectangles.cpp)
+target_link_libraries(problem_solving_basic gmock gtest gtest_main)
+gtest_discover_tests(problem_solving_basic)

@@ -1,0 +1,2 @@
+add_subdirectory(problem_solving_basic)
+add_subdirectory(problem_solving_intermediate)

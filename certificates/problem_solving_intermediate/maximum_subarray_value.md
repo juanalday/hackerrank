@@ -1,0 +1,80 @@
+﻿# Maximum Subarray Value
+
+In this problem, let the value of a 0-indexed array be defined as the square of the sum of even-indexed elements minus the sum of odd-indexed elements. 
+
+For instance, the value of array 
+`[2,−1,−4,5]` is the square of the sum of even-indexed elements (2 and -4) minus the sum of odd-indexed elements (-1 and 5). 
+
+Therefore, the value of the array is `[2+(−4)]−[−1+5]² = (-2 - 4)² = 36`.
+
+Given an array of integers, what is the maximum subarray value among its subarrays?
+
+For example, let's say arr=`[−1,−4,2]`. In this case, subarray `[−4,2]` has the value 
+`(−4−2)² =(−6)² =36`.
+
+This is the largest value among the subarrays of this array, so the answer is 36.
+
+**Note**: When selecting a subarray, the ordering of elements restarts at 0 regardless of the initial position of the elements within the original array.
+
+**Function Description**
+
+Complete the function *maxSubarrayValue* in the editor below. The function must return an integer denoting the maximum subarray value among the subarrays of array *arr*.
+
+maxSubarrayValue has the following parameter:
+
+arr[arr[0], ..., arr[n-1]]: an array of integers
+
+**Constraints**
+- 1 ≤ 𝑛 ≤ 1
+- 1≤n≤10^5
+ 
+ **Input Format For Custom Testing**
+
+The first line contains an integer, 𝑛, denoting the number of elements in arr.
+
+Each line 𝑖 of the 𝑛 subsequent lines (where 0≤i<n) contains a single integer, arr[i].
+
+# Sample Case 0
+
+**Sample Input For Custom Testing**
+
+```
+5
+1
+-1
+1
+-1
+1
+```
+
+**Sample Output**
+
+`25`
+
+**Explanation**
+
+Here, `arr = [1, -1, 1, -1, 1]`. The maximum subarray value is achieved for the whole array. It is 
+([1+1+1]−[−1+(−1)])^2 =(3−(−2))^2=25
+
+# Sample Case 1
+
+**Sample Input For Custom Testing**
+
+```
+5
+-1
+2
+3
+4
+-5
+```
+
+**Sample Output**
+
+`81`
+
+**Explanation**
+
+Here, `arr = [-1, 2, 3, 4, -5]`. The maximum subarray value is achieved for the subarray `[4, 5]`. 
+It is (4−(-5))^2 =81
+
