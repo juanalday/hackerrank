@@ -8,16 +8,50 @@ namespace {
 		long long pairs = 0;
 		long carry = 0;
 
-		for (auto count : freq) {
-			long total = count + carry;
-			pairs += total / 2;
-			carry = total % 2;
+		// All pairs can be extracted. The Carry part is the difficult bit
+		for_each(freq.begin(), freq.end(), [&](long& value) {pairs += value / 2; value = value % 2; }); 
+
+		// Let's move forward now for the easy carry's
+		auto it = find(freq.begin(), freq.end(), 1);
+		auto const itEnd = freq.end();
+		while (it != itEnd)
+		{
+			auto it2 = find(next(it), itEnd, 1);
+			if (it2 == itEnd)
+				break;
+			// 2 cases are something I can work with:
+			// distance = 1: direct pair creation, one is next to each other
+			// distance = 2: I can just move one forward or one backwards and create a pair
+			if (distance(it, it2) < 3)
+			{
+				++pairs;
+				*it = 0;
+				*it2++ = 0;
+			}
+			it = find(it2, itEnd, 1);
+
+
 		}
+
 		return pairs;
 	}
 }
 
-TEST(taskOfPairing, DISABLED_cleanedUpData)
+TEST(taskOfPairing, contiguous_carry)
+{
+	// I can move forward the previous to last element to create an extra pair
+	EXPECT_EQ(1, taskOfPairing({ 0, 0, 1, 1, 0, 0, 0, 0, 0, 1 }));
+	EXPECT_EQ(2, taskOfPairing({ 1, 1, 0, 0, 1, 0, 0, 0, 1, 1 }));
+}
+
+TEST(taskOfPairing, separated_carry)
+{
+	// I can move forward the previous to last element to create an extra pair
+	EXPECT_EQ(1, taskOfPairing({ 0, 0, 1, 0, 1, 0, 1, 0, 0, 1 }));
+	EXPECT_EQ(2, taskOfPairing({ 1, 0, 1, 0, 1, 0, 0, 1, 0, 1 }));
+}
+
+TEST(taskOfPairing, cleanedUpData)
 {
 	std::vector<long> cleanedInput = {
 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0,
@@ -149,7 +183,7 @@ TEST(taskOfPairing, DISABLED_cleanedUpData)
 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0,
 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1,
 1, 1, 0, 0, 0, 0, 1 };
-	EXPECT_EQ(7, taskOfPairing(cleanedInput));
+	EXPECT_EQ(1030, taskOfPairing(cleanedInput));
 
 }
 TEST(taskOfPairing, example)
@@ -182,7 +216,7 @@ TEST(taskOfPairing, case2)
 	EXPECT_EQ(7, taskOfPairing({ 6, 5, 3 }));
 }
 
-TEST(taskOfPairing, DISABLED_case3)
+TEST(taskOfPairing, case3)
 {
 
 	std::vector<long> input = { 0, 8844194, 2953613, 7703916, 2638507, 6943908, 2232046, 1976700, 8382612, 1773777, 15274, 8290580, 4094369,
@@ -573,7 +607,7 @@ TEST(taskOfPairing, DISABLED_case3)
 82374, 7090462, 2766375, 8466220, 3566776, 2977119, 3515389, 4315903, 3950759, 6168080, 3466036, 9858632, 5337599,
 9997837, 1216647, 104575, 4513108, 4134424, 699890, 13386, 7273269 };
 
-	EXPECT_EQ(7, taskOfPairing(input));
+	EXPECT_EQ(12424554348, taskOfPairing(input));
 
 }
 
