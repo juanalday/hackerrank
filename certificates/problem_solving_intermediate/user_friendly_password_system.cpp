@@ -11,7 +11,7 @@
 using ::testing::ElementsAre;
 
 namespace {
-	constexpr unsigned long long pow131(auto  n) {
+	unsigned long long pow131(auto  n) {
 		constexpr std::array<unsigned long long, 8> pow131 = { 1, 131, 17161, 2248091, 294499921, 38579489651, 5053913144281, 662062621900811};
 		if (n < 8)
 			return pow131[n];
@@ -19,7 +19,7 @@ namespace {
 		return static_cast<unsigned long long>(std::pow(131, n));
 		};
 
-	constexpr int hasherFunc(auto const& value) {
+	int hasherFunc(auto const& value) {
 		auto ret = std::transform_reduce(std::begin(value), std::end(value),
 			0LL,
 			std::plus<>(),
@@ -30,7 +30,7 @@ namespace {
 		return static_cast<int>(ret % 1000000007);
 	}
 
-	constexpr std::pair<int, int> hashPair(std::string str) {
+	std::pair<int, int> hashPair(std::string str) {
 		return { hasherFunc(str), hasherFunc(str + " ") - 32 };
 	}
 
