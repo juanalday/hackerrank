@@ -6,7 +6,7 @@
 
 int introTutorial(int V, std::vector<int> arr) {
 	auto iter = find(arr.begin(), arr.end(), V);
-	return distance(arr.begin(), iter);
+	return static_cast<int>(distance(arr.begin(), iter));
 }
 
 TEST(introTutorial, example)

@@ -16,7 +16,7 @@ std::vector<int> climbingLeaderboard(std::vector<int> ranked, std::vector<int> p
         // Find the position where player's score fits in the ranked list
         auto it = std::lower_bound(ranked.begin(), ranked.end(), p, std::greater<int>());
         // The rank will be the index of iterator + 1 (1-based index)
-        *resultIter++ = std::distance(ranked.begin(), it) + 1;
+        *resultIter++ = 1 + static_cast<int>(std::distance(ranked.begin(), it));
     }
 
     return results;
