@@ -18,16 +18,14 @@ namespace {
 		}
 
 		auto requiredChanges = halfSize - alreadyPalindrome; // This is the minimum changes to make in the first half to make it palindrome
-		auto spareChanges = k - requiredChanges; // This is the number of changes I can make in the first half after making it a palindrome
-		// I know how many letters I have to change to make it a palindrome,
-		// and I know how many letters I can change...
-		// Based on that, I can take a minimal-palindrome approach, or be more aggressive...
+		auto spareChanges = k - requiredChanges; // This is the extra number of changes I can make in the first half
+		// This loop will make the string a palindrome (if I have enough changes for it)
 		for (auto it = s.begin(), it2 = prev(s.end()); it < it2; ++it, --it2) 
 		{
-			// both letters are not the same, I need to change them...
+			// The letters are different, so let's change that
 			if (*it != *it2) 
 			{
-				// If none are nine, and I have a spare change, I can make them one of them 9
+				// If none are nine, and I have a spare change, I can make the left one a '9'
 				if ((spareChanges > 0) && (*it != '9') && (*it2 != '9')) 
 				{
 					*it = '9';
