@@ -14,6 +14,7 @@ add_executable(sorting
   lilys_homework.cpp
   quicksort_partition.cpp
   running_time.cpp
+  time_waited.cpp
 )
 target_link_libraries(sorting gmock gtest gtest_main)
 gtest_discover_tests(sorting)
