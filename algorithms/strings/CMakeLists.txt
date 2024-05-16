@@ -9,6 +9,6 @@ add_executable(algorithm_strings
   two_characters.cpp
   weighted_uniform_string.cpp
 
-)
+ "pattern_matching.cpp")
 target_link_libraries(algorithm_strings gmock gtest gtest_main)
 gtest_discover_tests(algorithm_strings)
