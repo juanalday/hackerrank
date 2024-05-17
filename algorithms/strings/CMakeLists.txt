@@ -1,5 +1,6 @@
 add_executable(algorithm_strings
   alternating_characters.cpp
+  beautiful_binary_string.cpp
   caesar_cipher.cpp
   camelcase.cpp
   funny_string.cpp
