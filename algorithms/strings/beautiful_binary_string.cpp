@@ -42,3 +42,7 @@ TEST(BeautifulBinaryString, case0) {
 TEST(BeautifulBinaryString, case1) {
 	EXPECT_EQ(0, beautifulBinaryString("01100"));
 }
+
+TEST(BeautifulBinaryString, case11) {
+	EXPECT_EQ(3, beautifulBinaryString("0100101010"));
+}
