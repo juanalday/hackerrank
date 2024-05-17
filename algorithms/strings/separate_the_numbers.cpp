@@ -47,12 +47,12 @@ namespace {
 	}
 }
 
-TEST(separateNumbers, example)
+TEST(SeparateTheNumbers, example)
 {
 	EXPECT_EQ(separateNumbers("1234"), "YES 1");
 }
 
-TEST(separateNumbers, sample0)
+TEST(SeparateTheNumbers, sample0)
 {
 	EXPECT_EQ(separateNumbers("1234"), "YES 1");
 	EXPECT_EQ(separateNumbers("91011"), "YES 9");
@@ -63,7 +63,7 @@ TEST(separateNumbers, sample0)
 	EXPECT_EQ(separateNumbers("1"), "NO");
 }
 
-TEST(separateNumbers, sample1)
+TEST(SeparateTheNumbers, sample1)
 {
 	EXPECT_EQ(separateNumbers("99910001001"), "YES 999");
 	EXPECT_EQ(separateNumbers("7891011"), "YES 7");
@@ -71,7 +71,7 @@ TEST(separateNumbers, sample1)
 	EXPECT_EQ(separateNumbers("999100010001"), "NO");
 }
 
-TEST(separateNumbers, case0)
+TEST(SeparateTheNumbers, case0)
 {
 	EXPECT_EQ(separateNumbers("1234"), "YES 1");
 	EXPECT_EQ(separateNumbers("91011"), "YES 9");
@@ -82,7 +82,7 @@ TEST(separateNumbers, case0)
 	EXPECT_EQ(separateNumbers("1"), "NO");
 }
 
-TEST(separateNumbers, case20)
+TEST(SeparateTheNumbers, case20)
 {
 	EXPECT_EQ(separateNumbers("429496729542949672964294967297"), "YES 4294967295");
 	EXPECT_EQ(separateNumbers("429496729542949672964294967296"), "NO");
@@ -96,7 +96,7 @@ TEST(separateNumbers, case20)
 	EXPECT_EQ(separateNumbers("4294967295000102003004005"), "NO");
 }
 
-TEST(separateNumbers, case21)
+TEST(SeparateTheNumbers, case21)
 {
 	EXPECT_EQ(separateNumbers("99910001001"), "YES 999");
 	EXPECT_EQ(separateNumbers("7891011"), "YES 7");

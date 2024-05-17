@@ -14,22 +14,22 @@ namespace {
 	}
 }
 
-TEST(camelcase, example)
+TEST(CamelCase, example)
 {
 	EXPECT_EQ(3, camelcase("oneTwoThree"));
 }
 
-TEST(camelcase, sample)
+TEST(CamelCase, sample)
 {
 	EXPECT_EQ(5, camelcase("saveChangesInTheEditor"));
 }
 
-TEST(camelcase, case0)
+TEST(CamelCase, case0)
 {
 	EXPECT_EQ(5, camelcase("saveChangesInTheEditor"));
 }
 
-TEST(camelcase, case5)
+TEST(CamelCase, case5)
 {
 	EXPECT_EQ(1, camelcase("abcd"));
 }

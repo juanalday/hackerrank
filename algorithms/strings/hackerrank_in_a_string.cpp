@@ -21,32 +21,32 @@ namespace {
 	}
 }
 
-TEST(hackerrankInString, example)
+TEST(HackerrankInString, example)
 {
 	EXPECT_EQ("YES", hackerrankInString("haacckkerrannkk"));
 	EXPECT_EQ("NO", hackerrankInString("haacckkerannk"));
 	EXPECT_EQ("NO", hackerrankInString("hccaakkerrannkk"));
 }
 
-TEST(hackerrankInString, sample0)
+TEST(HackerrankInString, sample0)
 {
 	EXPECT_EQ("YES", hackerrankInString("hereiamstackerrank"));
 	EXPECT_EQ("NO", hackerrankInString("hackerworld"));
 }
 
-TEST(hackerrankInString, sample1)
+TEST(HackerrankInString, sample1)
 {
 	EXPECT_EQ("YES", hackerrankInString("hhaacckkekraraannk"));
 	EXPECT_EQ("NO", hackerrankInString("rhbaasdndfsdskgbfefdbrsdfhuyatrjtcrtyytktjjt"));
 }
 
-TEST(hackerrankInString, case0)
+TEST(HackerrankInString, case0)
 {
 	EXPECT_EQ("YES", hackerrankInString("hereiamstackerrank"));
 	EXPECT_EQ("NO", hackerrankInString("hackerworld"));
 }
 
-TEST(hackerrankInString, case3)
+TEST(HackerrankInString, case3)
 {
 	EXPECT_EQ("YES", hackerrankInString("hhaacckkekraraannk"));
 	EXPECT_EQ("NO", hackerrankInString("rhbaasdndfsdskgbfefdbrsdfhuyatrjtcrtyytktjjt"));

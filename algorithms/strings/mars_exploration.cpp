@@ -22,37 +22,37 @@ namespace {
 	}
 }
 
-TEST(marsExploration, example)
+TEST(MarsExploration, example)
 {
 	EXPECT_EQ(2, marsExploration("SOSTOT"));
 }
 
-TEST(marsExploration, sample0)
+TEST(MarsExploration, sample0)
 {
 	EXPECT_EQ(3, marsExploration("SOSSPSSQSSOR"));
 }
 
-TEST(marsExploration, sample1)
+TEST(MarsExploration, sample1)
 {
 	EXPECT_EQ(1, marsExploration("SOSSOT"));
 }
 
-TEST(marsExploration, sample2)
+TEST(MarsExploration, sample2)
 {
 	EXPECT_EQ(0, marsExploration("SOSSOSSOS"));
 }
 
-TEST(marsExploration, case0)
+TEST(MarsExploration, case0)
 {
 	EXPECT_EQ(3, marsExploration("SOSSPSSQSSOR"));
 }
 
-TEST(marsExploration, case1)
+TEST(MarsExploration, case1)
 {
 	EXPECT_EQ(1, marsExploration("SOSSOT"));
 }
 
-TEST(marsExploration, case11)
+TEST(MarsExploration, case11)
 {
 	EXPECT_EQ(0, marsExploration("SOSSOSSOS"));
 }

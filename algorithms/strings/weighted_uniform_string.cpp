@@ -35,23 +35,23 @@ namespace {
 	}
 }
 
-TEST(weightedUniformStrings, example)
+TEST(WeightedUniformStrings, example)
 {
 	EXPECT_THAT(weightedUniformStrings("abbcccdddd", {1, 7, 5, 4, 15}), ElementsAre("Yes", "No", "No", "Yes", "No"));
 }
 
-TEST(weightedUniformStrings, sample0)
+TEST(WeightedUniformStrings, sample0)
 {
 	EXPECT_THAT(weightedUniformStrings("abccddde", { 1, 3, 12, 5, 9, 10}), ElementsAre("Yes", "Yes", "Yes", "Yes", "No", "No"));
 }
 
 
-TEST(weightedUniformStrings, case0)
+TEST(WeightedUniformStrings, case0)
 {
 	EXPECT_THAT(weightedUniformStrings("abccddde", { 1, 3, 12, 5, 9, 10 }), ElementsAre("Yes", "Yes", "Yes", "Yes", "No", "No"));
 }
 
-TEST(weightedUniformStrings, case31)
+TEST(WeightedUniformStrings, case31)
 {
 	EXPECT_THAT(weightedUniformStrings("aaabbbbcccddd", {9, 7, 8, 12, 5 }), ElementsAre("Yes", "No", "Yes", "Yes", "No"));
 }

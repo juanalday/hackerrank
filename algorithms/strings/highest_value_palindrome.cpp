@@ -87,38 +87,38 @@ TEST(HighestValuePalindrome, debug_tests) {
 }
 
 
-TEST(highestValuePalindrome, example)
+TEST(HighestValuePalindrome, example)
 {
 	EXPECT_EQ(highestValuePalindrome("1231", 3), "9339");
 	EXPECT_EQ(highestValuePalindrome("12321", 1), "12921");
 }
 
-TEST(highestValuePalindrome, sample0)
+TEST(HighestValuePalindrome, sample0)
 {
 	EXPECT_EQ(highestValuePalindrome("3943", 1), "3993");
 }
 
-TEST(highestValuePalindrome, sample1)
+TEST(HighestValuePalindrome, sample1)
 {
 	EXPECT_EQ(highestValuePalindrome("092282", 3), "992299");
 }
 
-TEST(highestValuePalindrome, sample2)
+TEST(HighestValuePalindrome, sample2)
 {
 	EXPECT_EQ(highestValuePalindrome("0011", 1), "-1");
 }
 
-TEST(highestValuePalindrome, case0)
+TEST(HighestValuePalindrome, case0)
 {
 	EXPECT_EQ(highestValuePalindrome("3943", 1), "3993");
 }
 	
-TEST(highestValuePalindrome, case31)
+TEST(HighestValuePalindrome, case31)
 {
 	EXPECT_EQ(highestValuePalindrome("092282", 3), "992299");
 }
 
-TEST(highestValuePalindrome, case32)
+TEST(HighestValuePalindrome, case32)
 {
 	EXPECT_EQ(highestValuePalindrome("0011", 1), "-1");
 }

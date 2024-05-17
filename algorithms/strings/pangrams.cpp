@@ -17,28 +17,28 @@ namespace {
 	}
 }
 
-TEST(pangrams, example)
+TEST(Pangrams, example)
 {
 	EXPECT_EQ("pangram", pangrams("The quick brown fox jumps pver the lazy dog"));
 }
 
-TEST(pangrams, sample0)
+TEST(Pangrams, sample0)
 {
 	EXPECT_EQ("pangram",     pangrams("We promptly judged antique ivory buckles for the next prize"));
 }
 
-TEST(pangrams, sample1)
+TEST(Pangrams, sample1)
 {
 	EXPECT_EQ("not pangram", pangrams("We promptly judged antique ivory buckles for the prize"));
 }
 
 
-TEST(pangrams, case0)
+TEST(Pangrams, case0)
 {
 	EXPECT_EQ("pangram", pangrams("We promptly judged antique ivory buckles for the next prize"));
 }
 
-TEST(pangrams, case1)
+TEST(Pangrams, case1)
 {
 	EXPECT_EQ("not pangram", pangrams("We promptly judged antique ivory buckles for the prize"));
 }

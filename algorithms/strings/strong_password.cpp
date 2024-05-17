@@ -7,7 +7,6 @@
 
 namespace {
 
-
 	int minimumNumber(std::string password) {
 		int digit{ false }, lower{ false }, upper{ false }, special{ false };
 		std::string const specialChars{ "!@#$%^&*()-+" };
@@ -29,28 +28,28 @@ namespace {
 	}
 }
 
-TEST(strong_password, example)
+TEST(StrongPassword, example)
 {
 	EXPECT_EQ(2, minimumNumber("2bbbb"));
 	EXPECT_EQ(1, minimumNumber("2bb#A"));
 }
 
-TEST(strong_password, sample0)
+TEST(StrongPassword, sample0)
 {
 	EXPECT_EQ(3, minimumNumber("Ab1"));
 }
 
-TEST(strong_password, sample1)
+TEST(StrongPassword, sample1)
 {
 	EXPECT_EQ(1, minimumNumber("#HackerRank"));
 }
 
-TEST(strong_password, case0)
+TEST(StrongPassword, case0)
 {
 	EXPECT_EQ(3, minimumNumber("Ab1"));
 }
 
-TEST(strong_password, case1)
+TEST(StrongPassword, case1)
 {
 	EXPECT_EQ(1, minimumNumber("#HackerRank"));
 }

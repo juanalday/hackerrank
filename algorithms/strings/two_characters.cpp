@@ -34,22 +34,22 @@ namespace {
 	}
 }
 
-TEST(two_characters, example)
+TEST(TwoCharacters, example)
 {
 	EXPECT_EQ(4, alternate("abaacdabd"));
 }
 
-TEST(two_characters, sample0)
+TEST(TwoCharacters, sample0)
 {
 	EXPECT_EQ(5, alternate("beabeefeab"));
 }
 
-TEST(two_characters, sample1)
+TEST(TwoCharacters, sample1)
 {
 	EXPECT_EQ(8, alternate("asdcbsdcagfsdbgdfanfghbsfdab"));
 }
 
-TEST(two_characters, sample_case2)
+TEST(TwoCharacters, sample_case2)
 {
 	EXPECT_EQ(0, alternate("asvkugfiugsalddlasguifgukvsa"));
 }
