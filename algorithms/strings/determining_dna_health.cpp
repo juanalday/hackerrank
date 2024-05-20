@@ -29,12 +29,12 @@ namespace {
 
 			}
 		}
-		unsigned long score(int first, int last) const noexcept {
+		unsigned long score(int min, int max) const noexcept {
 			unsigned long score = 0;
 			for (std::pair<int, unsigned long> s : scores) {
-				if (s.first < first)
+				if (s.first < min)
 					continue;
-				if (s.first > last) { // scores are sorted by position so no need to continue after this one
+				if (s.first > max) { // scores are sorted by position so no need to continue after this one
 					return score;
 				}
 				score += s.second;
@@ -90,7 +90,7 @@ namespace {
 		}
 
 
-		std::pair<unsigned long, unsigned long> score(std::vector<std::vector<std::string>> queries)
+		std::pair<unsigned long, unsigned long> score(std::vector<std::vector<std::string>> queries) const noexcept
 		{
 			std::pair<unsigned long, unsigned long> scores{ ULONG_MAX, 0 };
 
