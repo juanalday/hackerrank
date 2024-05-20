@@ -1,6 +1,34 @@
 // HARD https://www.hackerrank.com/challenges/determining-dna-health/problem
 // Note: This exercise is a mess. You have to manually modify main to call this function, and also redirect output to fout.
 
+/*
+  Add something similar to this to the hackerrank stub to make it work, 
+  since the main function entry point is not provided in the exercise.
+
+    string s_temp;
+	getline(cin, s_temp);
+
+	int s = stoi(ltrim(rtrim(s_temp)));
+
+	// THIS IS THE MAIN ENTRY POINT FOR THE CODE, AS HACKERRANK FORGOT TO ADD IT
+    BasicTrie trie(genes, health);
+    std::vector<std::vector<std::string>> queryData;
+    queryData.reserve(s);
+    for (int s_itr = 0; s_itr < s; s_itr++) {
+	  string first_multiple_input_temp;
+	  getline(cin, first_multiple_input_temp);
+
+	vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
+	queryData.emplace_back(std::move(first_multiple_input));
+
+    auto scores = trie.score(queryData);
+    ofstream fout(getenv("OUTPUT_PATH"));
+    fout << scores.first << ' ' << scores.second << "\n";
+    fout.close();
+    return 0;
+  }
+*/
+
 #include <gtest/gtest.h>
 
 #include <algorithm>
