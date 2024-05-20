@@ -1,4 +1,4 @@
-// Link: https://www.hackerrank.com/challenges/alternating-characters/problem
+// EASY https://www.hackerrank.com/challenges/alternating-characters/problem
 
 #include <gtest/gtest.h>
 

@@ -3,6 +3,7 @@ add_executable(algorithm_strings
   beautiful_binary_string.cpp
   caesar_cipher.cpp
   camelcase.cpp
+  determining_dna_health.cpp
   funny_string.cpp
   gem_stones.cpp
   hackerrank_in_a_string.cpp
@@ -11,10 +12,11 @@ add_executable(algorithm_strings
   pangrams.cpp
   pattern_matching.cpp
   separate_the_numbers.cpp
-  strong_password.cpp 
+  strong_password.cpp
+  the_love_letter_mistery.cpp
   two_characters.cpp
   weighted_uniform_string.cpp
-   "the_love_letter_mistery.cpp")
+)
   
 target_link_libraries(algorithm_strings gmock gtest gtest_main)
 gtest_discover_tests(algorithm_strings)
