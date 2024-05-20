@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/weighted-uniform-string/problem
+// EASY https://www.hackerrank.com/challenges/weighted-uniform-string/problem
 
 #include <gtest/gtest.h>
 #include "gmock/gmock-matchers.h"

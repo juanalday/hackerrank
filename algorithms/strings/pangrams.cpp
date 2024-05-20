@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/hackerrank-in-a-string/problem
+// EASY https://www.hackerrank.com/challenges/pangrams/problem
 
 #include <gtest/gtest.h>
 

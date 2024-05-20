@@ -1,3 +1,5 @@
+// This is not published as a hackerrank exercise, but was part of an online test.
+
 #include <gtest/gtest.h>
 
 #include <string>

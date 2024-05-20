@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/richie-rich/problem
+// MEDIUM https://www.hackerrank.com/challenges/richie-rich/problem
 
 #include <gtest/gtest.h>
 

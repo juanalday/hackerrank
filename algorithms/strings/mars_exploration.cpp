@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/mars-exploration/problem
+// EASY https://www.hackerrank.com/challenges/mars-exploration/problem
 
 #include <gtest/gtest.h>
 

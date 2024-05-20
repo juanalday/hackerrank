@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/camelcase/problem
+// EASY https://www.hackerrank.com/challenges/camelcase/problem
 
 #include <gtest/gtest.h>
 

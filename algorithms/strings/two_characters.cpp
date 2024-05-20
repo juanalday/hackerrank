@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/two-characters/problem
+// EASY https://www.hackerrank.com/challenges/two-characters/problem
 
 #include <gtest/gtest.h>
 

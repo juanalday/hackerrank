@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/strong-password/problem
+// EASY https://www.hackerrank.com/challenges/strong-password/problem
 
 #include <gtest/gtest.h>
 

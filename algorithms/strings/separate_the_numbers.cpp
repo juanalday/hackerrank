@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/separate-the-numbers/problem
+// EASY https://www.hackerrank.com/challenges/separate-the-numbers/problem
 
 #include <gtest/gtest.h>
 

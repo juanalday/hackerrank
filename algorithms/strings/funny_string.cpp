@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/funny-string/problem
+// EASY https://www.hackerrank.com/challenges/funny-string/problem
 
 #include <gtest/gtest.h>
 

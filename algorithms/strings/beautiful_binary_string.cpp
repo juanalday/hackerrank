@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/beautiful-binary-string/problem
+// EASY https://www.hackerrank.com/challenges/beautiful-binary-string/problem
 
 #include <gtest/gtest.h>
 

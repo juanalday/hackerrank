@@ -1,4 +1,4 @@
-// https://www.hackerrank.com/challenges/the-love-letter-mystery/problem
+// EASY https://www.hackerrank.com/challenges/the-love-letter-mystery/problem
 
 #include <gtest/gtest.h>
 
