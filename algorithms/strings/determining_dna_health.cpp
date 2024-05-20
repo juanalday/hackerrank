@@ -111,12 +111,12 @@ namespace {
 }
 
 TEST(DeterminingDnaHealth, example) {
-	EXPECT_EQ(std::pair(0, 19), BasicTrie({ "a", "b", "c", "aa", "d", "b" }, { 1, 2, 3, 4, 5, 6 }).score({ {"1", "5", "caaab"}, {"0", "4", "xyz"}, {"2", "4", "bcdybc"} }));
+	EXPECT_EQ(std::pair(0UL, 19UL), BasicTrie({ "a", "b", "c", "aa", "d", "b" }, { 1, 2, 3, 4, 5, 6 }).score({ {"1", "5", "caaab"}, {"0", "4", "xyz"}, {"2", "4", "bcdybc"} }));
 
 }
 
 TEST(DeterminingDnaHealth, sample0) {
-	EXPECT_EQ(std::pair(0, 19), BasicTrie({ "a", "b", "c", "aa", "d", "b" }, { 1, 2, 3, 4, 5, 6 }).score({ {"1", "5", "caaab"}, {"0", "4", "xyz"}, {"2", "4", "bcdybc"} }));
+	EXPECT_EQ(std::pair(0UL, 19UL), BasicTrie({ "a", "b", "c", "aa", "d", "b" }, { 1, 2, 3, 4, 5, 6 }).score({ {"1", "5", "caaab"}, {"0", "4", "xyz"}, {"2", "4", "bcdybc"} }));
 
 }
 
