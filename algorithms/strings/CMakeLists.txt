@@ -22,7 +22,7 @@ add_executable(a_strings
   two_characters.cpp
   two_strings.cpp 
   weighted_uniform_string.cpp
-)
+ "sherlock_and_the_valid_string.cpp")
   
 target_link_libraries(a_strings gmock gtest gtest_main)
 gtest_discover_tests(a_strings)
