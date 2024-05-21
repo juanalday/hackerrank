@@ -15,7 +15,7 @@ namespace {
 			std::for_each(s.begin(), s.end(), [&single](auto c) { single[c - 'a'] = 1; });
 			std::transform(gem.begin(), gem.end(), single.begin(), gem.begin(), std::plus<int>());
 		}
-		return std::count(gem.begin(), gem.end(), arr.size());
+		return static_cast<int>(std::count(gem.begin(), gem.end(), arr.size()));
 	}
 }
 

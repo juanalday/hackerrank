@@ -13,9 +13,9 @@ namespace {
 		for (; it < itEnd; ++it, --itEnd) {
 			if (*it != *itEnd) { // first mismatch
 				if ((*next(it) == *itEnd) && (*next(it, 2) == *prev(itEnd))) // check if removing left char makes palindrome
-					return distance(s.begin(), it);
+					return static_cast<int>(distance(s.begin(), it));
 				else // So removing right char makes palindrome
-					return distance(s.begin(), itEnd);
+					return static_cast<int>(distance(s.begin(), itEnd));
 			}
 		}
 		return -1;

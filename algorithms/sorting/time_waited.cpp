@@ -1,3 +1,5 @@
+// This test is part of a corporate testing and is not available in hackerrank exercises
+
 #include <gtest/gtest.h>
 
 #include <iomanip>
