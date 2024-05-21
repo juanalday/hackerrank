@@ -1,14 +1,18 @@
 add_executable(algorithm_strings
   alternating_characters.cpp
+  anagram.cpp
   beautiful_binary_string.cpp
   caesar_cipher.cpp
   camelcase.cpp
   determining_dna_health.cpp
   funny_string.cpp
+  game_of_thrones.cpp
   gem_stones.cpp
   hackerrank_in_a_string.cpp
   highest_value_palindrome.cpp
+  making_anagrams.cpp
   mars_exploration.cpp
+  palindrome_index.cpp
   pangrams.cpp
   pattern_matching.cpp
   separate_the_numbers.cpp
@@ -16,7 +20,7 @@ add_executable(algorithm_strings
   the_love_letter_mistery.cpp
   two_characters.cpp
   weighted_uniform_string.cpp
- "palindrome_index.cpp")
+ )
   
 target_link_libraries(algorithm_strings gmock gtest gtest_main)
 gtest_discover_tests(algorithm_strings)
