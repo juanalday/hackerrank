@@ -1,4 +1,4 @@
-add_executable(algorithm_strings
+add_executable(a_strings
   alternating_characters.cpp
   anagram.cpp
   beautiful_binary_string.cpp
@@ -16,11 +16,13 @@ add_executable(algorithm_strings
   pangrams.cpp
   pattern_matching.cpp
   separate_the_numbers.cpp
+  string_construction.cpp
   strong_password.cpp
   the_love_letter_mistery.cpp
   two_characters.cpp
+  two_strings.cpp 
   weighted_uniform_string.cpp
- )
+)
   
-target_link_libraries(algorithm_strings gmock gtest gtest_main)
-gtest_discover_tests(algorithm_strings)
+target_link_libraries(a_strings gmock gtest gtest_main)
+gtest_discover_tests(a_strings)
