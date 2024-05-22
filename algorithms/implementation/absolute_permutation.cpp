@@ -1,68 +1,72 @@
-// https://www.hackerrank.com/challenges/absolute-permutation/problem
+// MEDIUM https://www.hackerrank.com/challenges/absolute-permutation/problem
+
 #include "gtest/gtest.h"
 #include "gmock/gmock-matchers.h"
 
 #include <numeric>
 #include <vector>
 
-using ::testing::ElementsAre;
+namespace {
 
-std::vector<int> absolutePermutationStd(int n, int k) {
-	std::vector<int> data(n, 0);
-	iota(data.begin(), data.end(), 1);
-	if (k == 0)
-		return data;
+	using ::testing::ElementsAre;
 
-	do
-	{
-		auto idx(0);
-		auto c = count_if(data.begin(), data.end(), [&idx, k](int value) {return std::abs(value - ++idx) == k; });
-		if (c == data.size())
+	std::vector<int> absolutePermutationStd(int n, int k) {
+		std::vector<int> data(n, 0);
+		iota(data.begin(), data.end(), 1);
+		if (k == 0)
 			return data;
-	} while (std::next_permutation(data.begin(), data.end()));
-	return { -1 };
-}
 
-std::vector<int> absolutePermutation(int n, int k) {
-	std::vector<int> data(n, 0);
-	iota(data.begin(), data.end(), 1);
-
-	if (k == 0)
-		return data;
-
-	if ((n % 2 != 0) // Odd number of elements, return...
-		|| (n % (2 * k) != 0)) // Check if n is divisible by 2k
+		do
+		{
+			auto idx(0);
+			auto c = count_if(data.begin(), data.end(), [&idx, k](int value) {return std::abs(value - ++idx) == k; });
+			if (c == data.size())
+				return data;
+		} while (std::next_permutation(data.begin(), data.end()));
 		return { -1 };
-	int counter(0);
-	for_each(data.begin(), data.end(), [&counter, &k](int& number) {number = ++counter + k; if (counter % k == 0) k *= -1; });
-	return data;
+	}
+
+	std::vector<int> absolutePermutation(int n, int k) {
+		std::vector<int> data(n, 0);
+		iota(data.begin(), data.end(), 1);
+
+		if (k == 0)
+			return data;
+
+		if ((n % 2 != 0) // Odd number of elements, return...
+			|| (n % (2 * k) != 0)) // Check if n is divisible by 2k
+			return { -1 };
+		int counter(0);
+		for_each(data.begin(), data.end(), [&counter, &k](int& number) {number = ++counter + k; if (counter % k == 0) k *= -1; });
+		return data;
+	}
 }
 
-TEST(absolutePermutationStd, example)
+TEST(AbsolutePermutationStd, example)
 {
 	EXPECT_THAT(absolutePermutation(4, 2), ElementsAre(3, 4, 1, 2));
 }
 
-TEST(absolutePermutation, example)
+TEST(AbsolutePermutation, example)
 {
 	EXPECT_THAT(absolutePermutation(4, 2), ElementsAre(3, 4, 1, 2));
 }
 
-TEST(absolutePermutationStd, sample0)
+TEST(AbsolutePermutationStd, sample0)
 {
 	EXPECT_THAT(absolutePermutationStd(2, 1), ElementsAre(2, 1));
 	EXPECT_THAT(absolutePermutationStd(3, 0), ElementsAre(1, 2, 3));
 	EXPECT_THAT(absolutePermutationStd(3, 2), ElementsAre(-1));
 }
 
-TEST(absolutePermutation, sample0)
+TEST(AbsolutePermutation, sample0)
 {
 	EXPECT_THAT(absolutePermutation(2, 1), ElementsAre(2, 1));
 	EXPECT_THAT(absolutePermutation(3, 0), ElementsAre(1, 2, 3));
 	EXPECT_THAT(absolutePermutation(3, 2), ElementsAre(-1));
 }
 
-TEST(absolutePermutation, sample1)
+TEST(AbsolutePermutation, sample1)
 {
 	EXPECT_THAT(absolutePermutation(2, 1), ElementsAre(2, 1));
 	EXPECT_THAT(absolutePermutation(10, 5), ElementsAre(6, 7, 8, 9, 10, 1, 2, 3, 4, 5));
@@ -77,14 +81,14 @@ TEST(absolutePermutation, sample1)
 
 }
 
-TEST(absolutePermutation, case0)
+TEST(AbsolutePermutation, case0)
 {
 	EXPECT_THAT(absolutePermutation(2, 1), ElementsAre(2, 1));
 	EXPECT_THAT(absolutePermutation(3, 0), ElementsAre(1, 2, 3));
 	EXPECT_THAT(absolutePermutation(3, 2), ElementsAre(-1));
 }
 
-TEST(absolutePermutation, case1)
+TEST(AbsolutePermutation, case1)
 {
 	EXPECT_THAT(absolutePermutation(2, 1), ElementsAre(2, 1));
 	EXPECT_THAT(absolutePermutation(10, 5), ElementsAre(6, 7, 8, 9, 10, 1, 2, 3, 4, 5));

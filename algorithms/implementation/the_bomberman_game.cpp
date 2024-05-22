@@ -1,4 +1,4 @@
-//https://www.hackerrank.com/challenges/bomber-man/problem
+// MEDIUM https://www.hackerrank.com/challenges/bomber-man/problem
 
 #include <gtest/gtest.h>
 #include "gmock/gmock-matchers.h"
@@ -36,50 +36,52 @@ namespace {
 			}
 			return ret;
 		};
-}
-std::vector<std::string> bomberMan(int n, std::vector<std::string> grid)
-{
-	auto blowTargets = [](std::vector<std::string> const& targets)
-		{
-			auto rows = targets.size();
-			auto columns = targets.front().size();
-			std::vector<std::string> ret(targets.size(), std::string(columns, 'O'));
 
-			for (int r = 0; r < rows; ++r)
-			{
-				for (int j = 0; j < columns; ++j)
-				{
-					if (targets[r][j] != 'O')
-						continue;
-					ret[r][j] = '.';
-					if (j > 0)
-						ret[r][j - 1] = '.'; // LEFT
-					if (j + 1 < columns)
-						ret[r][j + 1] = '.'; // RIGHT
-					if (r > 0)
-						ret[r - 1][j] = '.'; // UP
-					if (r + 1 < rows)
-						ret[r + 1][j] = '.'; // DOWN
-				}
-			}
-			return ret;
-		};
-
-	if (n < 3)
-		return grid;
-
-	if (n % 2 == 0) // On even seconds, the entire grid is filled with bombs.
+	std::vector<std::string> bomberMan(int n, std::vector<std::string> grid)
 	{
-		return std::vector<std::string>(grid.size(), std::string(grid.front().size(), 'O'));
+		auto blowTargets = [](std::vector<std::string> const& targets)
+			{
+				auto rows = targets.size();
+				auto columns = targets.front().size();
+				std::vector<std::string> ret(targets.size(), std::string(columns, 'O'));
+
+				for (int r = 0; r < rows; ++r)
+				{
+					for (int j = 0; j < columns; ++j)
+					{
+						if (targets[r][j] != 'O')
+							continue;
+						ret[r][j] = '.';
+						if (j > 0)
+							ret[r][j - 1] = '.'; // LEFT
+						if (j + 1 < columns)
+							ret[r][j + 1] = '.'; // RIGHT
+						if (r > 0)
+							ret[r - 1][j] = '.'; // UP
+						if (r + 1 < rows)
+							ret[r + 1][j] = '.'; // DOWN
+					}
+				}
+				return ret;
+			};
+
+		if (n < 3)
+			return grid;
+
+		if (n % 2 == 0) // On even seconds, the entire grid is filled with bombs.
+		{
+			return std::vector<std::string>(grid.size(), std::string(grid.front().size(), 'O'));
+		}
+
+		if (n % 4 == 3)
+			return blowTargets(grid);
+
+		return blowTargets(blowTargets(grid));
 	}
 
-	if (n % 4 == 3)
-		return blowTargets(grid);
-
-	return blowTargets(blowTargets(grid));
 }
 
-TEST(bomberMan, code_repeat)
+TEST(BomberMan, code_repeat)
 {
 	EXPECT_THAT(bomberMan(3, {
 		".......",
@@ -154,7 +156,7 @@ TEST(bomberMan, code_repeat)
 
 }
 
-TEST(bomberMan, sample0)
+TEST(BomberMan, sample0)
 {
 	EXPECT_THAT(bomberMan(3, {
 		".......",
@@ -173,7 +175,7 @@ TEST(bomberMan, sample0)
 
 }
 
-TEST(bomberMan, case0)
+TEST(BomberMan, case0)
 {
 	EXPECT_THAT(bomberMan(3, {
 		".......",
@@ -191,7 +193,7 @@ TEST(bomberMan, case0)
 			"...OOOO"));
 }
 
-TEST(bomberMan, case5)
+TEST(BomberMan, case5)
 {
 	int n = 5;
 	std::vector<std::string> const input{ "...O.O.O.O.........O.O..O.O..O.....O.OO.O.O...O....O..OOOOO......O....O....O.O...O.O.OOOOO.OO..O..O....O...O.OO..O....O.OO.....O..OO......O....OO..O....OO....O.................O......O...",
@@ -598,7 +600,7 @@ TEST(bomberMan, case5)
 	EXPECT_EQ(output, blowTargetsExternal(blowTargetsExternal(input)));
 }
 
-TEST(bomberMan, case7)
+TEST(BomberMan, case7)
 {
 	int n = 197;
 	std::vector<std::string> const input{ "..O.OO..O.OO..O...O...O.OO.O...............O.......O..O...OO..O......O..O...OO..O..O...OO..O....O..O.....OO.........OO.O...O..OO.OO..OO.OO..O.OO.OOO...OO.O.O.O..O...O..OO....OO.OO..OOO.OOO.O..OOO..O.",
@@ -994,7 +996,7 @@ TEST(bomberMan, case7)
 
 }
 
-TEST(bomberMan, case23)
+TEST(BomberMan, case23)
 {
 	int n = 503486865;
 	std::vector<std::string> const input{ "O..OOOO..O...O..O.O....O.O..O...O.O.............OO..OOO..OOOO..O.O......OO..OO..O...O..O..O..O..O.....O.......O.O.OOOO....O.OO.O...OO....O....OO.OO.O..OO.O.....O.OOO....O....O.....OO.OO.......O...O.O.",
@@ -1402,7 +1404,7 @@ TEST(bomberMan, case23)
 	EXPECT_EQ(output, bomberMan(n, input));
 	EXPECT_EQ(output, blowTargetsExternal(blowTargetsExternal(input)));
 }
-TEST(bomberMan, case24)
+TEST(BomberMan, case24)
 {
 	int n = 504361995;
 	std::vector<std::string> const input({ "..........O....O.O..OOOO....O...O.O.OO.O..O....O...O...O...O.OO........OO..O......O....O.......O..OO....O..O.OO.....O....O....O.OO.O.O.O....O..O..O.O..O.O.O........O.O..O...O..OOO......OO.OOO......O.O",
@@ -1812,7 +1814,7 @@ TEST(bomberMan, case24)
 	EXPECT_EQ(output, blowTargetsExternal(input));
 }
 
-TEST(bomberMan, case25)
+TEST(BomberMan, case25)
 {
 	std::vector<std::string> const input{
 		".......",

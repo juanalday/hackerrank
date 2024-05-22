@@ -1,22 +1,37 @@
+// EASY https://www.hackerrank.com/challenges/grading/problem
+
 #include <gtest/gtest.h>
+#include <gmock/gmock-matchers.h>
 
 #include <vector>
-std::vector<int> gradingStudents(std::vector<int> grades) {
-    for (auto& x : grades)
-    {
-        if (x < 38)
-            continue;
-        int nextMultiple = 5 - (x % 5) + x;
-        if ((nextMultiple - x) < 3)
-            x = nextMultiple;
+
+using ::testing::ElementsAre;
+
+namespace {
+    std::vector<int> gradingStudents(std::vector<int> grades) {
+        for (auto& x : grades)
+        {
+            if (x < 38)
+                continue;
+            int nextMultiple = 5 - (x % 5) + x;
+            if ((nextMultiple - x) < 3)
+                x = nextMultiple;
+        }
+        return grades;
     }
-    return grades;
 }
 
-TEST(gradingStudents, sample0)
+TEST(GradingStudents, example)
 {
-    std::vector input{73, 67, 38, 33};
-    std::vector output{ 75, 67, 40, 33 };
-    
-    EXPECT_EQ(gradingStudents(input), output);
+    EXPECT_THAT(gradingStudents({ 84, 29, 57}), ElementsAre(85, 29, 57));
+}
+
+TEST(GradingStudents, sample0)
+{
+    EXPECT_THAT(gradingStudents({ 73, 67, 38, 33 }), ElementsAre(75, 67, 40, 33));
+}
+
+TEST(GradingStudents, case0)
+{
+    EXPECT_THAT(gradingStudents({ 73, 67, 38, 33 }), ElementsAre(75, 67, 40, 33));
 }

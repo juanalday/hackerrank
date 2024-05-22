@@ -1,10 +1,9 @@
-add_executable(a_strings
+add_executable(strings_easy
   alternating_characters.cpp
   anagram.cpp
   beautiful_binary_string.cpp
   caesar_cipher.cpp
   camelcase.cpp
-  determining_dna_health.cpp
   funny_string.cpp
   game_of_thrones.cpp
   gem_stones.cpp
@@ -22,7 +21,22 @@ add_executable(a_strings
   two_characters.cpp
   two_strings.cpp 
   weighted_uniform_string.cpp
- "sherlock_and_the_valid_string.cpp" "maximum_palindrome.cpp")
-  
-target_link_libraries(a_strings gmock gtest gtest_main)
-gtest_discover_tests(a_strings)
+ )
+target_link_libraries(strings_easy gmock gtest gtest_main)
+gtest_discover_tests(strings_easy)
+
+ add_executable(strings_medium
+   bear_and_steady_gene.cpp
+   common_child.cpp
+   maximum_palindrome.cpp
+   sherlock_and_anagrams.cpp
+   sherlock_and_the_valid_string.cpp
+ )
+target_link_libraries(strings_medium gmock gtest gtest_main)
+gtest_discover_tests(strings_medium)
+
+add_executable(strings_hard
+  determining_dna_health.cpp
+)
+target_link_libraries(strings_hard gmock gtest gtest_main)
+gtest_discover_tests(strings_hard)

@@ -1,4 +1,4 @@
-//https://www.hackerrank.com/challenges/almost-sorted/problem
+// MEDIUM https://www.hackerrank.com/challenges/almost-sorted/problem
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -62,12 +62,12 @@ void almostSorted(std::vector<int> arr) {
 	std::cout << v << std::endl;
 }
 
-TEST(almostSorted, single)
+TEST(AlmostSorted, single)
 {
 	EXPECT_EQ("yes", processAlmostSorted({ 2 }));
 }
 
-TEST(almostSorted, swap)
+TEST(AlmostSorted, swap)
 {
 	EXPECT_EQ("yes\nswap 1 2", processAlmostSorted({ 10, 7 }));
 	EXPECT_EQ("yes\nswap 2 4", processAlmostSorted({ 1, 5, 3, 2 }));
@@ -76,7 +76,7 @@ TEST(almostSorted, swap)
 	EXPECT_EQ("yes\nswap 3 7", processAlmostSorted({ 1, 2, 7, 4, 5, 6, 3, 8, 9, 10 }));
 }
 
-TEST(almostSorted, reverse)
+TEST(AlmostSorted, reverse)
 {
 	EXPECT_EQ("yes\nreverse 2 5", processAlmostSorted({ 1, 5, 4, 3, 2 }));
 	EXPECT_EQ("yes\nreverse 3 7", processAlmostSorted({ 1, 2, 7, 6, 5, 4, 3, 8, 9, 10 }));
@@ -84,22 +84,32 @@ TEST(almostSorted, reverse)
 
 
 }
-TEST(almostSorted, case0)
+TEST(AlmostSorted, example)
+{
+	EXPECT_EQ("yes\nswap 3 4", processAlmostSorted({ 2, 3, 5, 4 }));
+}
+
+TEST(AlmostSorted, sample1)
 {
 	EXPECT_EQ("yes\nswap 1 2", processAlmostSorted({ 4, 2 }));
 }
 
-TEST(almostSorted, test_case1)
+TEST(AlmostSorted, sample2)
 {
 	EXPECT_EQ("no", processAlmostSorted({ 3, 1, 2 }));
 }
 
-TEST(almostSorted, test_case2)
+TEST(AlmostSorted, sample3)
 {
 	EXPECT_EQ("yes\nreverse 2 5", processAlmostSorted({ 1, 5, 4, 3, 2, 6 }));
 }
 
-TEST(almostSorted, case13)
+TEST(AlmostSorted, case0)
+{
+	EXPECT_EQ("yes\nswap 1 2", processAlmostSorted({ 4, 2 }));
+}
+
+TEST(AlmostSorted, case13)
 {
 	std::vector<int> input = {
 			8, 9, 16, 22, 35, 47, 62, 70, 78, 82, 103, 108, 117, 120, 134, 135, 142, 146, 152, 174, 187, 198, 210, 217, 224, 259, 290, 299, 307, 314, 317, 318, 319, 331, 344,
@@ -5032,23 +5042,23 @@ TEST(almostSorted, case13)
 	EXPECT_EQ("yes\nswap 19429 37227", processAlmostSorted(input));
 }
 
-TEST(almostSorted, case20)
+TEST(AlmostSorted, case20)
 {
 	EXPECT_EQ("no", processAlmostSorted({ 3, 1, 2 }));
 }
 
-TEST(almostSorted, case21)
+TEST(AlmostSorted, case21)
 {
 	EXPECT_EQ("yes\nreverse 2 5", processAlmostSorted({ 1, 5, 4, 3, 2, 6 }));
 
 }
 
-TEST(almostSorted, case23)
+TEST(AlmostSorted, case23)
 {
 	EXPECT_EQ("yes\nswap 4 5", processAlmostSorted({ 1, 2, 3, 5, 4, 6 }));
 }
 
-TEST(almostSorted, case24)
+TEST(AlmostSorted, case24)
 {
 	EXPECT_EQ("no", processAlmostSorted({ 43, 65, 1, 98, 99, 101 }));
 }

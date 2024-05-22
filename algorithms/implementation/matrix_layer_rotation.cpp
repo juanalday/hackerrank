@@ -1,3 +1,4 @@
+// HARD https://www.hackerrank.com/challenges/matrix-rotation-algo/problem
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -73,21 +74,38 @@ void matrixRotation(std::vector<std::vector<int>> const& matrix, int r) {
 	}
 }
 
-TEST(matrixRotation, odd_rows_and_columns)
+TEST(MatrixRotation, odd_rows_and_columns)
 {
 	std::vector<std::vector<int>> input = { { 1, 2, 3, 4, 5 }, { 16, 1, 2, 3, 6 }, { 15, 8, 1, 4, 07 }, { 14, 7, 6, 5, 8 }, {13, 12, 11, 10, 9} };
 	std::vector<std::vector<int>> output = { { 2, 3, 4, 5, 6}, {1, 2, 3, 4, 7}, {16, 1, 1, 5, 8}, {15, 8, 7, 6, 9}, {14, 13, 12, 11, 10} };
 	EXPECT_EQ(output, doMatrixRotation(input, 1));
 }
-TEST(matrixRotation, sample1)
+
+TEST(MatrixRotation, example)
 {
-	std::vector<std::vector<int>> input = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
-	std::vector<std::vector<int>> output_r1 = { {2, 3, 4, 8}, {1, 7, 11, 12}, {5, 6, 10, 16}, {9, 13, 14, 15} };
-	std::vector<std::vector<int>> output = { {3, 4, 8, 12}, {2, 11, 10, 16}, {1, 7, 6, 15}, {5, 9, 13, 14} };
+	std::vector<std::vector<int>> input = { { 1, 2, 3, 4 }, { 12, 1, 2, 5 }, { 11, 4, 3, 6}, { 10, 9, 8, 7 } };
+	std::vector<std::vector<int>> output_r1 = { {2, 3, 4, 5}, {1, 2, 3, 6}, {12, 1, 4, 7}, {11, 10, 9, 8} };
+	std::vector<std::vector<int>> output = { {3, 4, 5, 6}, {2, 3, 4, 7}, {1, 2, 1, 8}, {12, 11, 10, 9} };
 	EXPECT_EQ(output_r1, doMatrixRotation(input, 1));
 	EXPECT_EQ(output, doMatrixRotation(input, 2));
 }
-TEST(matrixRotation, sample2)
+
+TEST(MatrixRotation, sample0)
+{
+	std::vector<std::vector<int>> const input = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+	std::vector<std::vector<int>> const output = { {2, 3, 4, 8}, {1, 7, 11, 12}, {5, 6, 10, 16}, {9, 13, 14, 15} };
+	EXPECT_EQ(output, doMatrixRotation(input, 1));
+}
+
+
+TEST(MatrixRotation, sample1)
+{
+	std::vector<std::vector<int>> input = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+	std::vector<std::vector<int>> output = { {3, 4, 8, 12}, {2, 11, 10, 16}, {1, 7, 6, 15}, {5, 9, 13, 14} };
+	EXPECT_EQ(output, doMatrixRotation(input, 2));
+}
+
+TEST(MatrixRotation, sample2)
 {
 	std::vector<std::vector<int>> input = { { 1, 2, 3, 4 }, { 7, 8, 9, 10 }, { 13, 14, 15, 16 }, { 19, 20, 21, 22 }, {25, 26, 27, 28} };
 	std::vector<std::vector<int>> output_r1 = { {2, 3, 4, 10 }, {1, 9, 15, 16}, {7, 8, 21, 22}, {13, 14, 20, 28}, {19, 25, 26, 27} };
@@ -106,11 +124,38 @@ TEST(matrixRotation, sample2)
 	EXPECT_EQ(output, doMatrixRotation(input, 7));
 }
 
-
-TEST(matrixRotation, sample3)
+TEST(MatrixRotation, sample3)
 {
 	std::vector<std::vector<int>> input = { { 1, 1 }, { 1, 1} };
 	std::vector<std::vector<int>> output = { { 1, 1 }, { 1, 1} };
 	EXPECT_EQ(output, doMatrixRotation(input, 3));
 }
 
+TEST(MatrixRotation, case0)
+{
+	std::vector<std::vector<int>> const input = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+	std::vector<std::vector<int>> const output = { {2, 3, 4, 8}, {1, 7, 11, 12}, {5, 6, 10, 16}, {9, 13, 14, 15} };
+	EXPECT_EQ(output, doMatrixRotation(input, 1));
+}
+
+
+TEST(MatrixRotation, case10)
+{
+	std::vector<std::vector<int>> input = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+	std::vector<std::vector<int>> output = { {3, 4, 8, 12}, {2, 11, 10, 16}, {1, 7, 6, 15}, {5, 9, 13, 14} };
+	EXPECT_EQ(output, doMatrixRotation(input, 2));
+}
+
+TEST(MatrixRotation, case11)
+{
+	std::vector<std::vector<int>> input = { { 1, 2, 3, 4 }, { 7, 8, 9, 10 }, { 13, 14, 15, 16 }, { 19, 20, 21, 22 }, {25, 26, 27, 28} };
+	std::vector<std::vector<int>> output = { { 28, 27, 26, 25}, {22, 9, 15, 19}, {16, 8, 21, 13}, {10, 14, 20, 7}, {4, 3, 2, 1} };
+	EXPECT_EQ(output, doMatrixRotation(input, 7));
+}
+
+TEST(MatrixRotation, case12)
+{
+	std::vector<std::vector<int>> const input = { { 1, 1 }, { 1, 1} };
+	std::vector<std::vector<int>> const output = { { 1, 1 }, { 1, 1} };
+	EXPECT_EQ(output, doMatrixRotation(input, 3));
+}
