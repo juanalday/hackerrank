@@ -1,4 +1,4 @@
-add_executable(implementation_easy
+add_executable(implemen_easy
   # acm_icpc_team.cpp https://www.hackerrank.com/challenges/acm-icpc-team/problem
   # angry_professor.cpp https://www.hackerrank.com/challenges/angry-professor/problem
   # append_and_delete.cpp https://www.hackerrank.com/challenges/append-and-delete/problem
@@ -51,10 +51,10 @@ add_executable(implementation_easy
   service_lane.cpp
   strange_counter.cpp
   )
-target_link_libraries(implementation_easy gmock gtest gtest_main)
-gtest_discover_tests(implementation_easy)
+target_link_libraries(implemen_easy gmock gtest gtest_main)
+gtest_discover_tests(implemen_easy)
 
-add_executable(implementation_medium
+add_executable(implemen_medium
   3d_surface_area.cpp
   absolute_permutation.cpp
   almost_sorted.cpp
@@ -73,11 +73,11 @@ add_executable(implementation_medium
   two_pluses.cpp
 )
 
-target_link_libraries(implementation_medium gmock gtest gtest_main)
-gtest_discover_tests(implementation_medium)
+target_link_libraries(implemen_medium gmock gtest gtest_main)
+gtest_discover_tests(implemen_medium)
 
-add_executable(implementation_hard
+add_executable(implemen_hard
     matrix_layer_rotation.cpp
   )
-target_link_libraries(implementation_hard gmock gtest gtest_main)
-gtest_discover_tests(implementation_hard)
+target_link_libraries(implemen_hard gmock gtest gtest_main)
+gtest_discover_tests(implemen_hard)
