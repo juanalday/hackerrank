@@ -7,7 +7,7 @@
 namespace {
     int jumpingOnClouds(std::vector<int> const& c) {
         int count = 0;
-        int n = c.size();
+        int n = static_cast<int>(c.size());
         int i = 0;
         while (i < n - 1) {
             if (i + 2 < n && c[i + 2] == 0) {
