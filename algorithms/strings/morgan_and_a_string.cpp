@@ -11,58 +11,60 @@
 
 namespace {
 
-	std::array<int, 200100>  cnt, c, p, pn, cn;
-	std::array<int, 100000> cnt2;
+	std::array<int, 200100>  countArray, c, suffixArray, pn, cn;
 	std::vector<int> getSuffixArray(std::string s)
 	{
-		cnt.fill(0);
+		countArray.fill(0);
 		int n = s.size();
-		for (int i = 0; i < n; ++i) ++cnt[s[i]];
-		for (int i = 1; i < 128; ++i) cnt[i] += cnt[i - 1];
-		for (int i = 0; i < n; ++i)p[--cnt[s[i]]] = i;
+		// Counting sort based on the first character
+		for (int i = 0; i < n; ++i) ++countArray[s[i]];
+		for (int i = 1; i < 128; ++i) countArray[i] += countArray[i - 1];
+		for (int i = 0; i < n; ++i)suffixArray[--countArray[s[i]]] = i;
 
 		int count = 1;
-		c[p[0]] = count - 1;
+		c[suffixArray[0]] = count - 1;
 		for (int i = 1; i < n; ++i)
 		{
-			if (s[p[i]] != s[p[i - 1]])
+			if (s[suffixArray[i]] != s[suffixArray[i - 1]])
 				++count;
-			c[p[i]] = count - 1;
+			c[suffixArray[i]] = count - 1;
 		}
+
+		// Iteratively sort based on the first 2^h characters
 		for (int h = 0; (1 << h) < n; ++h)
 		{
 			for (int i = 0; i < n; ++i)
 			{
-				pn[i] = p[i] - (1 << h);
+				pn[i] = suffixArray[i] - (1 << h);
 				if (pn[i] < 0)
 					pn[i] += n;
 			}
 
-			cnt.fill(0);
+			// Counting sort based on the new positions
+			countArray.fill(0);
 
 			auto fmax = *std::max_element(c.begin(), next(c.begin(), n));
-			for (int i = 0; i < n; ++i) { ++cnt[c[i]]; }
-			for (int i = 1; i < count; ++i)cnt[i] += cnt[i - 1];
-			for (int i = n - 1; i >= 0; --i)p[--cnt[c[pn[i]]]] = pn[i];
+			for (int i = 0; i < n; ++i) { ++countArray[c[i]]; }
+			for (int i = 1; i < count; ++i)countArray[i] += countArray[i - 1];
+			for (int i = n - 1; i >= 0; --i)suffixArray[--countArray[c[pn[i]]]] = pn[i];
 
 			count = 1;
-			cn[p[0]] = count - 1;
+			cn[suffixArray[0]] = count - 1;
 			for (int i = 1; i < n; ++i)
 			{
-				int pos1 = (p[i] + (1 << h)) % n;
-				int pos2 = (p[i - 1] + (1 << h)) % n;
-				if (c[p[i]] != c[p[i - 1]] || c[pos1] != c[pos2])
+				int pos1 = (suffixArray[i] + (1 << h)) % n;
+				int pos2 = (suffixArray[i - 1] + (1 << h)) % n;
+				if (c[suffixArray[i]] != c[suffixArray[i - 1]] || c[pos1] != c[pos2])
 					++count;
-				cn[p[i]] = count - 1;
+				cn[suffixArray[i]] = count - 1;
 			}
 			for (int i = 0; i < n; ++i)
 			{
 				c[i] = cn[i];
 			}
 		}
-		std::vector<int> res(c.begin(), next(c.begin(), n));
-
-		return res;
+		// Convert the class array to a vector and return it
+		return std::vector(c.begin(), next(c.begin(), n));
 	}
 
 	std::vector<int> build_suffix_array(std::string const& str)
