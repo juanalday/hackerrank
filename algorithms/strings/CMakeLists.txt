@@ -36,6 +36,7 @@ target_link_libraries(strings_medium gmock gtest gtest_main)
 gtest_discover_tests(strings_medium)
 
 add_executable(strings_hard
+  count_strings.cpp
   determining_dna_health.cpp
   morgan_and_a_string.cpp
 )
