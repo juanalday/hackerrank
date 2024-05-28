@@ -11,62 +11,6 @@
 
 namespace {
 
-	std::array<int, 200100>  countArray, c, suffixArray, pn, cn;
-	std::vector<int> getSuffixArray(std::string s)
-	{
-		countArray.fill(0);
-		int n = s.size();
-		// Counting sort based on the first character
-		for (int i = 0; i < n; ++i) ++countArray[s[i]];
-		for (int i = 1; i < 128; ++i) countArray[i] += countArray[i - 1];
-		for (int i = 0; i < n; ++i)suffixArray[--countArray[s[i]]] = i;
-
-		int count = 1;
-		c[suffixArray[0]] = count - 1;
-		for (int i = 1; i < n; ++i)
-		{
-			if (s[suffixArray[i]] != s[suffixArray[i - 1]])
-				++count;
-			c[suffixArray[i]] = count - 1;
-		}
-
-		// Iteratively sort based on the first 2^h characters
-		for (int h = 0; (1 << h) < n; ++h)
-		{
-			for (int i = 0; i < n; ++i)
-			{
-				pn[i] = suffixArray[i] - (1 << h);
-				if (pn[i] < 0)
-					pn[i] += n;
-			}
-
-			// Counting sort based on the new positions
-			countArray.fill(0);
-
-			auto fmax = *std::max_element(c.begin(), next(c.begin(), n));
-			for (int i = 0; i < n; ++i) { ++countArray[c[i]]; }
-			for (int i = 1; i < count; ++i)countArray[i] += countArray[i - 1];
-			for (int i = n - 1; i >= 0; --i)suffixArray[--countArray[c[pn[i]]]] = pn[i];
-
-			count = 1;
-			cn[suffixArray[0]] = count - 1;
-			for (int i = 1; i < n; ++i)
-			{
-				int pos1 = (suffixArray[i] + (1 << h)) % n;
-				int pos2 = (suffixArray[i - 1] + (1 << h)) % n;
-				if (c[suffixArray[i]] != c[suffixArray[i - 1]] || c[pos1] != c[pos2])
-					++count;
-				cn[suffixArray[i]] = count - 1;
-			}
-			for (int i = 0; i < n; ++i)
-			{
-				c[i] = cn[i];
-			}
-		}
-		// Convert the class array to a vector and return it
-		return std::vector(c.begin(), next(c.begin(), n));
-	}
-
 	std::vector<int> build_suffix_array(std::string const& str)
 	{
 		std::vector<std::tuple<int, std::string::const_iterator, int, int>> suffixes(str.size());
@@ -100,7 +44,7 @@ namespace {
 				current = { std::get<2>(suffixes[i]), std::get<3>(suffixes[i]) };
 				if (previous == current)
 				{
-					std::get<2>(suffixes[i]) = std::get<2>(suffixes[i-1]);
+					std::get<2>(suffixes[i]) = std::get<2>(suffixes[i - 1]);
 				}
 				else
 				{
@@ -108,7 +52,7 @@ namespace {
 				}
 				previous = current;
 			}
-			std::for_each(suffixes.begin(), suffixes.end(), [](auto& tup) {std::get<3>(tup) =-1; });
+			std::for_each(suffixes.begin(), suffixes.end(), [](auto& tup) {std::get<3>(tup) = -1; });
 			// I sort according to index, as I will use it to get the next index
 			sort(suffixes.begin(), suffixes.end(), [](auto const& lhs, auto const& rhs) {return std::get<0>(lhs) < std::get<0>(rhs); });
 			int half = k / 2;
@@ -130,6 +74,64 @@ namespace {
 		transform(suffixes.begin(), suffixes.end(), ret.begin(), [](auto const& tup) {return std::get<0>(tup); });
 		return ret;
 	}
+	std::array<int, 200100>  countArray, classArray, suffixArray, newSuffixArray, newClassArray;
+	std::vector<int> getSuffixArray(const std::string& s) {
+		int n = static_cast<int>(s.size());
+
+		// Initialize count array
+		countArray.fill(0);
+
+		// Counting sort based on the first character
+		for (int i = 0; i < n; ++i) ++countArray[s[i]];
+		for (int i = 1; i < 128; ++i) countArray[i] += countArray[i - 1];
+		for (int i = 0; i < n; ++i) suffixArray[--countArray[s[i]]] = i;
+
+		// Initialize class array
+		int numClasses = 1;
+		classArray[suffixArray[0]] = numClasses - 1;
+		for (int i = 1; i < n; ++i) {
+			if (s[suffixArray[i]] != s[suffixArray[i - 1]])
+				++numClasses;
+			classArray[suffixArray[i]] = numClasses - 1;
+		}
+
+		// Iteratively sort based on the first 2^h characters
+		for (int k = 1; k < n; k *= 2) {
+			// Adjust positions for the next sorting phase
+			for (int i = 0; i < n; ++i) {
+				newSuffixArray[i] = suffixArray[i] - k;
+				if (newSuffixArray[i] < 0)
+					newSuffixArray[i] += n;
+			}
+
+			// Counting sort based on the new positions
+			countArray.fill(0);
+			for (int i = 0; i < n; ++i) ++countArray[classArray[i]];
+			for (int i = 1; i < numClasses; ++i) countArray[i] += countArray[i - 1];
+			for (int i = n - 1; i >= 0; --i) suffixArray[--countArray[classArray[newSuffixArray[i]]]] = newSuffixArray[i];
+
+			// Update class array based on the sorted positions
+			numClasses = 1;
+			newClassArray[suffixArray[0]] = numClasses - 1;
+			for (int i = 1; i < n; ++i) {
+				int currentPos = (suffixArray[i] + k) % n;
+				int previousPos = (suffixArray[i - 1] + k) % n;
+				if (classArray[suffixArray[i]] != classArray[suffixArray[i - 1]] || classArray[currentPos] != classArray[previousPos])
+					++numClasses;
+				newClassArray[suffixArray[i]] = numClasses - 1;
+			}
+
+			// Copy new class array to the original class array
+			for (int i = 0; i < n; ++i) {
+				classArray[i] = newClassArray[i];
+			}
+		}
+
+		// Convert the suffix array to a vector and return it
+		return std::vector<int>(classArray.begin(), std::next(classArray.begin(), n));
+	}
+
+	
 	std::string morganAndString(std::string a, std::string b)
 	{
 		a.push_back('a');
