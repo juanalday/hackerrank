@@ -127,126 +127,69 @@ namespace {
 		}
 	};
 
+	std::vector<int> bruteForceSuffixArray(std::string const& str) {
+		std::vector<std::string> suffixes(str.size());
+		std::vector<int> suffixArray(str.size(), str.size());
+
+		// Create suffixes
+		for (auto i = 0; i < str.size(); ++i) suffixes[i] = str.substr(i);
+
+		// Sort the suffixes
+		std::sort(suffixes.begin(), suffixes.end());
+
+		// Store the starting indices of the sorted suffixes in the suffix array
+		std::transform(suffixes.begin(), suffixes.end(), suffixArray.begin(), [len = str.size()](std::string const& s) {return static_cast<int>(len - s.size()); });
+
+		return suffixArray;
+	}
+
+
 	// Prefix-doubling algo to build a suffixArray
-	std::vector<int> constructSA(std::string const& str) {
+	std::vector<int> suffixArray(std::string const& str) {
 		int len = static_cast<int>(str.size());
 
-		// I will create a vector of tuples, describing the suffixes, the ranks and the next ranks (meaning rank of the next suffix + k)
+		// I will create a vector of tuples, describing the ranks, the next ranks and the suffixes (meaning rank of the next suffix + k)
 		std::vector<std::tuple<int, int, int>> rankedSuffixes(str.size());
-		// Populate the original entries with index, char and next char (-1)
-		for (auto i = 0; i < str.size(); ++i) std::get<0>(rankedSuffixes[i]) = i;
-		// initial ranks are the ASCII values of the chars
-		transform(str.begin(), str.end(), rankedSuffixes.begin(), [i = 0](auto c) mutable {return std::make_tuple(i++, c, -1); });
+		// initial ranks are the ASCII values of the chars, and for id I pick o to n-1. the next-rank is -1 for now
+		transform(str.begin(), str.end(), rankedSuffixes.begin(), [i = 0](auto c) mutable {return std::make_tuple(c, -1, i++); });
 		// Adjust next-rank to rank of the next element. We won't touch the last one obviously
-		//for (int i = 0; i < len - 1; ++i) std::get<2>(rankedSuffixes[i]) = std::get<1>(rankedSuffixes[i + 1]);
-		transform(rankedSuffixes.begin(), std::prev(rankedSuffixes.end()), next(rankedSuffixes.begin()), rankedSuffixes.begin(),
-			[](auto& cur, auto& following) {
-				std::get<2>(cur) = std::get<1>(following);
-				return cur;; });
-		// Sort according to the rank value
-		auto tupleRankSorter = [](auto const& lhs, auto const& rhs) {return std::tie(std::get<1>(lhs), std::get<2>(lhs)) < std::tie(std::get<1>(rhs), std::get<2>(rhs)); };
+		// In this case, it means the ascii value of the next char
+		for (int i = 0; i < (len - 1); ++i) std::get<1>(rankedSuffixes[i]) = std::get<0>(rankedSuffixes[i + 1]);
 
-		sort(rankedSuffixes.begin(), rankedSuffixes.end(), tupleRankSorter);
-
-		for (int k = 2; k < len; k *= 2)
+		// Since tuple is rank-followingTank-index, this sorts according to rank value
+		sort(rankedSuffixes.begin(), rankedSuffixes.end());
+		for (int skip = 1; skip < 2*len; skip *= 2)
 		{
-			auto prevTup = rankedSuffixes[0];
-			std::get<1>(rankedSuffixes[0]) = 0; // rank first suffix
-			for (int i = 1; i < len; ++i) {
-				auto current = rankedSuffixes[i];
-				auto rank = std::get<1>(rankedSuffixes[i - 1]);
-				if (std::tie(std::get<1>(current), std::get<2>(current)) != std::tie(std::get<1>(prevTup), std::get<2>(prevTup))) {
-					++rank;
-				}
+			std::adjacent_difference(rankedSuffixes.begin(), rankedSuffixes.end(), rankedSuffixes.begin(),
+				[&, rank = 0](auto curr, auto const& prev) mutable  {
+					rank += ((std::get<0>(prev) == std::get<0>(curr)) && (std::get<1>(prev) == std::get<1>(curr))) ? 0 : 1;
+					std::get<0>(curr) = rank;
+					std::get<1>(curr) = -1;
+					return curr;
+				});
+			std::get<0>(rankedSuffixes[0]) = 0;
 
-				std::get<1>(rankedSuffixes[i]) = rank;
-				std::get<2>(rankedSuffixes[i]) = -1;
-				prevTup = current;
-			}
 
 			// I sort according to index, as I will use it to get the next index
-			sort(rankedSuffixes.begin(), rankedSuffixes.end(), [](auto const& lhs, auto const& rhs) {return std::get<0>(lhs) < std::get<0>(rhs); });
+			sort(rankedSuffixes.begin(), rankedSuffixes.end(), [](auto const& lhs, auto const& rhs) {return std::get<2>(lhs) < std::get<2>(rhs); });
 
-			// I will now adjust the values of rank[sa[i]+k] for all i
-			for (int i = 0; i < len; ++i) {
-				auto currentSA = std::get<0>(rankedSuffixes[i]);
-				auto targetSA = currentSA + k;
-				int value = -1;
-				if (targetSA < len)
-				{
-					value = std::get<1>(rankedSuffixes[targetSA]);
-				}
-				std::get<2>(rankedSuffixes[i]) = value;
+			// I will now adjust the values of rank[sa[i]+k] for all i's within range
+			if (skip < len) {
+				std::transform(std::next(rankedSuffixes.begin(), skip), rankedSuffixes.end(), rankedSuffixes.begin(), rankedSuffixes.begin(),
+					[](auto const& skipRank, auto  currentRank) {std::get<1>(currentRank) = std::get<0>(skipRank); return currentRank; });
 			}
-			sort(rankedSuffixes.begin(), rankedSuffixes.end(), tupleRankSorter);
+			sort(rankedSuffixes.begin(), rankedSuffixes.end());
 			// Optimization: If the last element has rank == len - 1, we can stop
-			if (std::get<1>(rankedSuffixes[len - 1]) == len - 1) break;
+			if (skip > 1 && (std::get<0>(rankedSuffixes[0]) == len - 1) )break;
+
+
 		}
 
 		std::vector<int> suffixes(len);
-		transform(rankedSuffixes.begin(), rankedSuffixes.end(), suffixes.begin(), [](auto const& tup) {return std::get<0>(tup); });
+		transform(rankedSuffixes.begin(), rankedSuffixes.end(), suffixes.begin(), [](auto const& tup) {return std::get<2>(tup); });
 		return suffixes;
 	}
 
-	std::vector<int> suffixArray(std::string const& str) {
-		// I will create a vector of tuples, 
-		// where I will store the index, the iterator to the string, the rank and the next rank
-		std::vector<std::tuple<int, int, int>> suffixes(str.size());
-
-		for (int i = 0; i < str.size(); ++i) {
-			auto& tup = suffixes[i];
-			std::get<0>(tup) = i;
-			std::get<2>(tup) = std::get<1>(tup) = *next(str.begin(), i);
-		}
-		// Adjust next-rank to rank of the next element
-		for (int i = 1; i < str.size(); ++i) std::get<2>(suffixes[i - 1]) = std::get<2>(suffixes[i]);
-		std::get<2>(*prev(suffixes.end())) = -1;
-
-		// Sort all suffixes according to rank and adjacent rank.
-		auto sortRank = [&suffixes](auto const& lhs, auto const& rhs) {
-			return std::tie(std::get<1>(lhs), std::get<2>(lhs)) < std::tie(std::get<1>(rhs), std::get<2>(rhs));
-			};
-
-		std::sort(suffixes.begin(), suffixes.end(), sortRank);
-
-		// Now, all my suffixes are sorted according to first and second chars.
-		// I will start sorting them according to first 4, then 8, then 16, and so on
-		for (int k = 4; k < 2 * str.size(); k *= 2)
-		{
-			std::get<1>(suffixes[0]) = 0;
-			std::pair<int, int> current;
-			std::pair previous = { std::get<1>(suffixes[0]), std::get<2>(suffixes[0]) };
-			for (int i = 1; i < str.size(); ++i) {
-				current = { std::get<1>(suffixes[i]), std::get<2>(suffixes[i]) };
-				if (previous == current)
-				{
-					std::get<1>(suffixes[i]) = std::get<1>(suffixes[i - 1]);
-				}
-				else
-				{
-					std::get<1>(suffixes[i]) = 1 + std::get<1>(suffixes[i - 1]);
-				}
-				previous = current;
-				std::get<2>(suffixes[i]) = -1; // I invalidate the next rank. I don't need to do it, but it is easier to debug
-			}
-			// I sort according to index, as I will use it to get the next index
-			sort(suffixes.begin(), suffixes.end(), [](auto const& lhs, auto const& rhs) {return std::get<0>(lhs) < std::get<0>(rhs); });
-			int half = k / 2;
-			for (int i = 0; i < str.size(); ++i)
-			{
-				int actualIndex = std::get<0>(suffixes[i]);
-				int nextIndex = std::get<0>(suffixes[i]) + half;
-				int nextValue = -1;
-				if (nextIndex < str.size())
-					nextValue = std::get<1>(suffixes[nextIndex]);
-				std::get<2>(suffixes[i]) = nextValue;
-			}
-			std::sort(suffixes.begin(), suffixes.end(), sortRank);
-		}
-		std::vector<int> ret(str.size());
-		transform(suffixes.begin(), suffixes.end(), ret.begin(), [](auto const& tup) {return std::get<0>(tup); });
-		return ret;
-	}
 
 	// Check https://visualgo.net/en/suffixarray?slide=1 to generate tests. This one is Kasai.
 	std::vector<int> lcpArray(std::string const& str, std::vector<int> const& sa)
@@ -331,26 +274,37 @@ namespace {
 
 TEST(StringFunctionCalculation, suffixArray)
 {
+	EXPECT_THAT(suffixArray("aaaaaa"),           ElementsAre(5, 4, 3, 2, 1, 0));
+	EXPECT_THAT(bruteForceSuffixArray("aaaaaa"), ElementsAre(5, 4, 3, 2, 1, 0));
+	EXPECT_THAT(SuffixArray("aaaaaa").GetSuffixArray(), ElementsAre(5, 4, 3, 2, 1, 0));
+	EXPECT_THAT(suffixArray("aaaaaaa"),           ElementsAre(6, 5, 4, 3, 2, 1, 0));
+	EXPECT_THAT(bruteForceSuffixArray("aaaaaaa"), ElementsAre(6, 5, 4, 3, 2, 1, 0));
+	EXPECT_THAT(SuffixArray("aaaaaaa").GetSuffixArray(), ElementsAre(6, 5, 4, 3, 2, 1, 0));
+	EXPECT_THAT(suffixArray("abaaaa"), ElementsAre(5, 4, 3, 2, 0 , 1));
+	EXPECT_THAT(bruteForceSuffixArray("abaaaa"), ElementsAre(5, 4, 3, 2, 0, 1));
+	EXPECT_THAT(SuffixArray("abaaaa").GetSuffixArray(), ElementsAre(5, 4, 3, 2, 0, 1));
+	EXPECT_THAT(bruteForceSuffixArray("abaaaa"), ElementsAre(5, 4, 3, 2, 0, 1));
+
+	EXPECT_THAT(bruteForceSuffixArray("AAAAA$"), ElementsAre(5, 4, 3, 2, 1, 0));
 	EXPECT_THAT(suffixArray("banana"), ElementsAre(5, 3, 1, 0, 4, 2));
-	EXPECT_THAT(suffixArray("aaaaaa"), ElementsAre(5, 4, 3, 2, 1, 0));
 	EXPECT_THAT(suffixArray("aaaaaaa"), ElementsAre(6, 5, 4, 3, 2, 1, 0));
 	EXPECT_THAT(suffixArray("AAAAAA$"), ElementsAre(6, 5, 4, 3, 2, 1, 0));
 	EXPECT_THAT(suffixArray("ABCABCDDD"), ElementsAre(0, 3, 1, 4, 2, 5, 8, 7, 6));
 	EXPECT_THAT(suffixArray("ABCABCDDD$"), ElementsAre(9, 0, 3, 1, 4, 2, 5, 8, 7, 6));
 	EXPECT_THAT(suffixArray("abcabcddd"), ElementsAre(0, 3, 1, 4, 2, 5, 8, 7, 6));
-	EXPECT_THAT(constructSA("banana"), ElementsAre(5, 3, 1, 0, 4, 2));
-	EXPECT_THAT(constructSA("aaaaaa"), ElementsAre(5, 4, 3, 2, 1, 0));
-	EXPECT_THAT(constructSA("AAAAAA$"), ElementsAre(6, 5, 4, 3, 2, 1, 0));
-	EXPECT_THAT(constructSA("ABCABCDDD"), ElementsAre(0, 3, 1, 4, 2, 5, 8, 7, 6));
-	EXPECT_THAT(constructSA("ABCABCDDD$"), ElementsAre(9, 0, 3, 1, 4, 2, 5, 8, 7, 6));
-	EXPECT_THAT(constructSA("abcabcddd"), ElementsAre(0, 3, 1, 4, 2, 5, 8, 7, 6));
+	EXPECT_THAT(bruteForceSuffixArray("banana"), ElementsAre(5, 3, 1, 0, 4, 2));
+	EXPECT_THAT(bruteForceSuffixArray("AAAAAA$"), ElementsAre(6, 5, 4, 3, 2, 1, 0));
+	EXPECT_THAT(bruteForceSuffixArray("ABCABCDDD"), ElementsAre(0, 3, 1, 4, 2, 5, 8, 7, 6));
+	EXPECT_THAT(bruteForceSuffixArray("ABCABCDDD$"), ElementsAre(9, 0, 3, 1, 4, 2, 5, 8, 7, 6));
+	EXPECT_THAT(bruteForceSuffixArray("abcabcddd"), ElementsAre(0, 3, 1, 4, 2, 5, 8, 7, 6));
 
 	std::string input = "aacbbabbabbbbbaaaaaaabbbbcacacbcabaccaabbbcaaabbccccbbbcbccccbbcaabaaabcbaacbcbaccaaaccbccbcaacbaccbaacbbabbabbbbbaaaaaaabbbbcacacbcabaccaabbbcaaabbccccbbbcbccccbbcaabaaabcbaacbcbaccaaaccbccbcaacbaccbaacbbabbabbbbbaaaaaaabbbbcacacbcabaccaabbbcaaabbccccbbbcbccccbbcaabaaabcbaacbcbaccaaaccbccbcaacbaccbaacbbabbabbbbbaaaaaaabbbbcacacbcabaccaabbbcaaabbccccbbbcbccccbbcaabaaabcbaacbcbaccaaaccbccbcaacbaccbaacbbabbabbbbbaaaaaaabbbbcacacbcabaccaabbbcaaabbccccbbbcbccccbbcaabaaabcbaacbcbaccaaaccbccbcaacbaccb";
-	
+	EXPECT_EQ(suffixArray(input), bruteForceSuffixArray(input));
+	auto blah = bruteForceSuffixArray(input);
 	auto subString = input.substr(0, 6);
 
 	auto mine = suffixArray(subString);
-	auto other = constructSA(subString);
+	auto other = bruteForceSuffixArray(subString);
 	auto yours = SuffixArray(subString).GetSuffixArray();
 	EXPECT_EQ(mine, yours);
 	int counter(0);
