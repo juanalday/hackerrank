@@ -4,6 +4,7 @@
 #include <gmock/gmock-matchers.h>
 
 #include <algorithm>
+#include <execution>
 #include <numeric>
 #include <stack>
 #include <string>
@@ -21,9 +22,9 @@ namespace {
 		// Create suffixes
 		for_each(suffixes.begin(), suffixes.end(), [&str, idx = 0](std::string& suffix) mutable {str.substr(idx++).swap(suffix); });
 		// Sort the suffixes
-		std::sort(suffixes.begin(), suffixes.end());
+		std::sort(std::execution::par_unseq, suffixes.begin(), suffixes.end());
 		// Store the starting indices of the sorted suffixes in the suffix array
-		std::transform(suffixes.begin(), suffixes.end(), suffixArray.begin(), [len = str.size()](std::string const& s) noexcept {return static_cast<int>(len - s.size()); });
+		std::transform(std::execution::par_unseq, suffixes.begin(), suffixes.end(), suffixArray.begin(), [len = str.size()](std::string const& s) noexcept {return static_cast<int>(len - s.size()); });
 
 		return suffixArray;
 	}
@@ -42,12 +43,12 @@ namespace {
 
 		// Adjust next-rank to rank of the next element. We won't touch the last one obviously
 		// In this case, it means the ascii value of the next char
-		std::transform(rankedSuffixes.begin(), prev(rankedSuffixes.end()), next(rankedSuffixes.cbegin()), rankedSuffixes.begin(),
+		std::transform(std::execution::par_unseq, rankedSuffixes.begin(), prev(rankedSuffixes.end()), next(rankedSuffixes.cbegin()), rankedSuffixes.begin(),
 			[](auto & current, auto const& next) noexcept {std::get<1>(current) = std::get<0>(next); return current;
 		});
 
 		// Since tuple is rank-followingTank-index, this sorts according to rank value
-		sort(rankedSuffixes.begin(), rankedSuffixes.end());
+		sort(std::execution::par_unseq, rankedSuffixes.begin(), rankedSuffixes.end());
 		for (int skip = 1; skip < len; skip *= 2)
 		{
 			std::adjacent_difference(rankedSuffixes.cbegin(), rankedSuffixes.cend(), rankedSuffixes.begin(),
@@ -62,14 +63,14 @@ namespace {
 
 			// I will sort according to the index, so I can use the index to find the next element
 			// This is faster than doing find_if for every index to find where is the index+skip value
-			sort(rankedSuffixes.begin(), rankedSuffixes.end(), [](auto const& lhs, auto const& rhs) noexcept {return std::get<2>(lhs) < std::get<2>(rhs); });
+			sort(std::execution::par_unseq, rankedSuffixes.begin(), rankedSuffixes.end(), [](auto const& lhs, auto const& rhs) noexcept {return std::get<2>(lhs) < std::get<2>(rhs); });
 
 			// I will now adjust the values of rank[sa[i]+k] for all i's within range
 			std::transform(std::next(rankedSuffixes.cbegin(), skip), rankedSuffixes.cend(), rankedSuffixes.cbegin(), rankedSuffixes.begin(),
 				[](auto const& skipRank, auto  currentRank) noexcept {std::get<1>(currentRank) = std::get<0>(skipRank); return currentRank; });
 
 			// And I sort again, according to ranks...
-			sort(rankedSuffixes.begin(), rankedSuffixes.end());
+			std::sort(std::execution::par_unseq, rankedSuffixes.begin(), rankedSuffixes.end());
 			// Optimization: If the last element has rank == len - 1, we can stop
 			if (std::get<0>(rankedSuffixes[0]) == len - 1)
 				break;
