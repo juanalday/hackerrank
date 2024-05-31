@@ -8,31 +8,60 @@
 
 namespace {
 	int buildString(int a, int b, std::string s) {
+        std::vector<int> lastPosition(26, -1);  // Last position of each character in the string
+        std::vector<int> previousPosition(s.size(), -1);  // Previous position of each character in the string
+        std::vector<int> dp(s.size() + 1, INT_MAX);  // DP array to store minimum cost to reach each position
+        std::vector<int> maxLength(s.size(), 0);  // Maximum length of substring ending at each position
 
-        std::vector<int> lastpos(26, -1);//last position table
-        std::vector<int> prevpos(26, 0);//previous position table
-        std::vector<int> dp(s.size() + 1, 0);//reach i pos the best res
-        std::vector<int> prevmaxlen(s.size(), 0);//previous max length table
+        std::vector<std::pair<int, int>> positions(26, { -1, -1 }); // current and previous position of each character in the string
+        dp[0] = 0;  // Initial cost to build an empty string is 0
+
+        int currentCost{ 0 };
+        std::vector<int> costHistory(1 + s.size(), 0);
 
         for (int i = 0; i < s.size(); ++i) {
-            prevpos[i] = lastpos[s[i] - 'a'];
-            lastpos[s[i] - 'a'] = i;
+            auto currentChar = s[i];
+            int currentCharIndex = (currentChar - 'a');
+            positions[currentCharIndex].second = positions[currentCharIndex].first;
+            positions[currentCharIndex].first = i;
+            previousPosition[i] = lastPosition[currentCharIndex];
+            lastPosition[currentCharIndex] = i;
+
+            // Cost to append the current character
             dp[i + 1] = dp[i] + a;
-            if (prevpos[i] != -1) {//appeared before
-                int ii = prevpos[i];
-                int maxlen = 1;
-                while (ii != -1) {
-                    if (ii == i - 1 || ii == 0) prevmaxlen[ii] = 1;
-                    else {
-                        if (s[i - 1] == s[ii - 1]) {
-                            prevmaxlen[ii] = std::min(prevmaxlen[ii - 1] + 1, std::min(i - ii, ii + 1));
-                            maxlen = std::max(maxlen, prevmaxlen[ii]);
-                        }
-                        else prevmaxlen[ii] = 1;
+            auto costToAppend = a; // Cost to append the current character
+
+            if (positions[currentCharIndex].second != -1) // If the current char has appeared before, we can try copying the substring. Let's evaluate the cost
+            { 
+                auto previousCharIndex = positions[currentCharIndex].second;
+            }
+
+            currentCost += costToAppend;
+
+
+
+            if (previousPosition[i] != -1) {  // If the character has appeared before
+                int previousIndex = previousPosition[i];
+                int currentMaxLen = 1;
+
+                while (previousIndex != -1) {
+                    if (previousIndex == i - 1 || previousIndex == 0) {
+                        maxLength[previousIndex] = 1;
                     }
-                    ii = prevpos[ii];
+                    else {
+                        if (s[i - 1] == s[previousIndex - 1]) {
+                            maxLength[previousIndex] = std::min(maxLength[previousIndex - 1] + 1, std::min(i - previousIndex, previousIndex + 1));
+                            currentMaxLen = std::max(currentMaxLen, maxLength[previousIndex]);
+                        }
+                        else {
+                            maxLength[previousIndex] = 1;
+                        }
+                    }
+                    previousIndex = previousPosition[previousIndex];
                 }
-                dp[i + 1] = std::min(dp[i + 1], dp[i - maxlen + 1] + b);
+
+                // Cost to copy the substring
+                dp[i + 1] = std::min(dp[i + 1], dp[i - currentMaxLen + 1] + b);
             }
         }
 
