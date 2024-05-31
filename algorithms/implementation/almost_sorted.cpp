@@ -6,61 +6,63 @@
 #include <iostream>
 #include <vector>
 
-std::string processAlmostSorted(std::vector<int> arr) {
+namespace {
+	std::string processAlmostSorted(std::vector<int> arr) {
 
-	// Let's find the first place where the array is not sorted
-	auto sortedEnd = std::is_sorted_until(arr.begin(), arr.end()); // this is the end of the sorted segment
-	// So, if arr is {1, 2, 7, 4, 5, 3}, sortedEnd points to 4
-	if (sortedEnd == arr.end()) // Yeah, this is fully sorted, or swapping a single element makes it sorted
-		return "yes";
+		// Let's find the first place where the array is not sorted
+		auto sortedEnd = std::is_sorted_until(arr.begin(), arr.end()); // this is the end of the sorted segment
+		// So, if arr is {1, 2, 7, 4, 5, 3}, sortedEnd points to 4
+		if (sortedEnd == arr.end()) // Yeah, this is fully sorted, or swapping a single element makes it sorted
+			return "yes";
 
-	// sortedEnd points to the first element that is not sorted in my sequence...
-	// Let's look for the swap case, as per the instructions
-	auto secondSortedEnd = std::is_sorted_until(sortedEnd, arr.end());
-	// So, if arr is {1, 2, 7, 4, 5, 3}, sortedEnd points to 4 and secondSortedEnd points to 3 (which is lower than 5)
-	// If there is nothing that breaks the sorting again,the only target for swap is the first element where sorting breaks
-	if (secondSortedEnd == arr.end())
-		secondSortedEnd = sortedEnd;
-	{
-		// In the swap case, sortedEnd points one past the last element that broke the ascending sequence.
-		// So the previous one is the one to swap
-		// So, if arr is {1, 2, 7, 4, 5, 3}, I swap the previous to 7 with 3. 
-		// arr now is {1, 2, 3, 4, 5, 7}
-		iter_swap(prev(sortedEnd), secondSortedEnd);
+		// sortedEnd points to the first element that is not sorted in my sequence...
+		// Let's look for the swap case, as per the instructions
+		auto secondSortedEnd = std::is_sorted_until(sortedEnd, arr.end());
+		// So, if arr is {1, 2, 7, 4, 5, 3}, sortedEnd points to 4 and secondSortedEnd points to 3 (which is lower than 5)
+		// If there is nothing that breaks the sorting again,the only target for swap is the first element where sorting breaks
+		if (secondSortedEnd == arr.end())
+			secondSortedEnd = sortedEnd;
+		{
+			// In the swap case, sortedEnd points one past the last element that broke the ascending sequence.
+			// So the previous one is the one to swap
+			// So, if arr is {1, 2, 7, 4, 5, 3}, I swap the previous to 7 with 3. 
+			// arr now is {1, 2, 3, 4, 5, 7}
+			iter_swap(prev(sortedEnd), secondSortedEnd);
+			if (std::is_sorted(arr.begin(), arr.end()))
+			{
+				auto l = distance(arr.begin(), prev(sortedEnd)) + 1;
+				auto r = distance(arr.begin(), secondSortedEnd) + 1;
+				return "yes\nswap " + std::to_string(l) + " " + std::to_string(r);
+			}
+			iter_swap(prev(sortedEnd), secondSortedEnd);
+		}
+
+		// So a single swap is not going to work. Maybe a range swap?
+		// The criteria here is a bit different.
+		// We already have sortedEnd pointing to the first element that is not sorted...
+		// So i have a sequence 1, 2, 7, 6, 5, 4, 3, 8
+		// sortedEnd is pointing to '6'.
+		// The start of the possible reversable range is '7'...
+		auto rangeStart = prev(sortedEnd);
+		// What is the last element in that sequence that is sorted in descending order?
+		// In my example, rangeStart points to '7' and rangeEnd will point to '8'
+		auto rangeEnd = is_sorted_until(rangeStart, arr.end(), std::greater<int>());
+
+		reverse(rangeStart, rangeEnd);
 		if (std::is_sorted(arr.begin(), arr.end()))
 		{
-			auto l = distance(arr.begin(), prev(sortedEnd)) + 1;
-			auto r = distance(arr.begin(), secondSortedEnd) + 1;
-			return "yes\nswap " + std::to_string(l) + " " + std::to_string(r);
+			auto l = distance(arr.begin(), rangeStart) + 1;
+			auto r = distance(arr.begin(), rangeEnd);
+			return "yes\nreverse " + std::to_string(l) + " " + std::to_string(r);
 		}
-		iter_swap(prev(sortedEnd), secondSortedEnd);
+
+		return "no";
 	}
 
-	// So a single swap is not going to work. Maybe a range swap?
-	// The criteria here is a bit different.
-	// We already have sortedEnd pointing to the first element that is not sorted...
-	// So i have a sequence 1, 2, 7, 6, 5, 4, 3, 8
-	// sortedEnd is pointing to '6'.
-	// The start of the possible reversable range is '7'...
-	auto rangeStart = prev(sortedEnd);
-	// What is the last element in that sequence that is sorted in descending order?
-	// In my example, rangeStart points to '7' and rangeEnd will point to '8'
-	auto rangeEnd = is_sorted_until(rangeStart, arr.end(), std::greater<int>());
-
-	reverse(rangeStart, rangeEnd);
-	if (std::is_sorted(arr.begin(), arr.end()))
-	{
-		auto l = distance(arr.begin(), rangeStart) + 1;
-		auto r = distance(arr.begin(), rangeEnd);
-		return "yes\nreverse " + std::to_string(l) + " " + std::to_string(r);
+	void almostSorted(std::vector<int> arr) {
+		auto v = processAlmostSorted(arr);
+		std::cout << v << std::endl;
 	}
-
-	return "no";
-}
-
-void almostSorted(std::vector<int> arr) {
-	auto v = processAlmostSorted(arr);
-	std::cout << v << std::endl;
 }
 
 TEST(AlmostSorted, single)
