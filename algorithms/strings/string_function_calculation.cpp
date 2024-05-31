@@ -36,18 +36,22 @@ namespace {
 		// I will create a vector of tuples, describing the ranks, the next ranks and the suffixes (meaning rank of the next suffix + k)
 		std::vector<std::tuple<int, int, int>> rankedSuffixes(str.size());
 		// initial ranks are the ASCII values of the chars, and for id I pick 0 to n-1. the next-rank is -1 for now
-		transform(str.cbegin(), str.cend(), rankedSuffixes.begin(), [i = 0](auto c) mutable {return std::make_tuple(c, -1, i++); });
+		std::transform(str.cbegin(), str.cend(), rankedSuffixes.begin(), 
+			[i = 0](auto c) mutable noexcept {return std::make_tuple(c, -1, i++);
+		});
 
 		// Adjust next-rank to rank of the next element. We won't touch the last one obviously
 		// In this case, it means the ascii value of the next char
-		std::transform(rankedSuffixes.begin(), prev(rankedSuffixes.end()), next(rankedSuffixes.cbegin()), rankedSuffixes.begin(),[](auto & current, auto const& next) {std::get<1>(current) = std::get<0>(next); return current;});
+		std::transform(rankedSuffixes.begin(), prev(rankedSuffixes.end()), next(rankedSuffixes.cbegin()), rankedSuffixes.begin(),
+			[](auto & current, auto const& next) noexcept {std::get<1>(current) = std::get<0>(next); return current;
+		});
 
 		// Since tuple is rank-followingTank-index, this sorts according to rank value
 		sort(rankedSuffixes.begin(), rankedSuffixes.end());
 		for (int skip = 1; skip < len; skip *= 2)
 		{
-			std::adjacent_difference(rankedSuffixes.begin(), rankedSuffixes.end(), rankedSuffixes.begin(),
-				[&, rank = 0](auto curr, auto const& prev) mutable {
+			std::adjacent_difference(rankedSuffixes.cbegin(), rankedSuffixes.cend(), rankedSuffixes.begin(),
+				[rank = 0](auto curr, auto const& prev) mutable noexcept {
 					rank += ((std::get<0>(prev) == std::get<0>(curr)) && (std::get<1>(prev) == std::get<1>(curr))) ? 0 : 1;
 					std::get<0>(curr) = rank;
 					std::get<1>(curr) = -1;
@@ -58,11 +62,11 @@ namespace {
 
 			// I will sort according to the index, so I can use the index to find the next element
 			// This is faster than doing find_if for every index to find where is the index+skip value
-			sort(rankedSuffixes.begin(), rankedSuffixes.end(), [](auto const& lhs, auto const& rhs) {return std::get<2>(lhs) < std::get<2>(rhs); });
+			sort(rankedSuffixes.begin(), rankedSuffixes.end(), [](auto const& lhs, auto const& rhs) noexcept {return std::get<2>(lhs) < std::get<2>(rhs); });
 
 			// I will now adjust the values of rank[sa[i]+k] for all i's within range
-			std::transform(std::next(rankedSuffixes.begin(), skip), rankedSuffixes.end(), rankedSuffixes.begin(), rankedSuffixes.begin(),
-				[](auto const& skipRank, auto  currentRank) {std::get<1>(currentRank) = std::get<0>(skipRank); return currentRank; });
+			std::transform(std::next(rankedSuffixes.cbegin(), skip), rankedSuffixes.cend(), rankedSuffixes.cbegin(), rankedSuffixes.begin(),
+				[](auto const& skipRank, auto  currentRank) noexcept {std::get<1>(currentRank) = std::get<0>(skipRank); return currentRank; });
 
 			// And I sort again, according to ranks...
 			sort(rankedSuffixes.begin(), rankedSuffixes.end());
@@ -72,7 +76,7 @@ namespace {
 		}
 
 		std::vector<int> suffixes(len);
-		transform(rankedSuffixes.begin(), rankedSuffixes.end(), suffixes.begin(), [](auto const& tup) {return std::get<2>(tup); });
+		transform(rankedSuffixes.cbegin(), rankedSuffixes.cend(), suffixes.begin(), [](auto const& tup) noexcept {return std::get<2>(tup); });
 		return suffixes;
 	}
 
