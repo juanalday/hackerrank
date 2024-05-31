@@ -1,4 +1,5 @@
 add_executable(strings.t
+  build_a_string.cpp
   alternating_characters.cpp
   anagram.cpp
   bear_and_steady_gene.cpp
@@ -30,7 +31,7 @@ add_executable(strings.t
   two_characters.cpp
   two_strings.cpp 
   weighted_uniform_string.cpp
-)
+ )
 
 target_link_libraries(strings.t gmock gtest gtest_main)
 gtest_discover_tests(strings.t)
