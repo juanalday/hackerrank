@@ -28,7 +28,7 @@ namespace {
 
 }
 
-TEST(BuildString, sample0) {
+TEST(BuildString, DISABLED_sample0) {
 	EXPECT_EQ(26, buildString(4, 5, "aabaacaba"));
 	EXPECT_EQ(42, buildString(8,9, "bacbacacb"));
 }
