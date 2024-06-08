@@ -157,7 +157,6 @@ namespace {
 			sa.append(s[i]);
 		}
 		return dp[s.length()];
-		//return StringBuilder(a, b, s).cost();
 	}
 }  // namespace
 

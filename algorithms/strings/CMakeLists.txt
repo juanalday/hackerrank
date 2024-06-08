@@ -4,6 +4,7 @@ add_executable(strings.t
   anagram.cpp
   bear_and_steady_gene.cpp
   beautiful_binary_string.cpp
+  build_a_palindrome.cpp
   caesar_cipher.cpp
   camelcase.cpp
   common_child.cpp
@@ -31,7 +32,7 @@ add_executable(strings.t
   two_characters.cpp
   two_strings.cpp 
   weighted_uniform_string.cpp
- )
+)
 
 target_link_libraries(strings.t gmock gtest gtest_main)
 gtest_discover_tests(strings.t)
