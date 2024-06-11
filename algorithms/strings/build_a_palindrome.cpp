@@ -169,7 +169,7 @@ namespace {
 		std::string longest_palindrome;
 		int v = 0, l = 0, best_len = 0, best_pos = 0, i{ 0 };
 
-		std::map<int, int> bestLenAtPos;
+		std::map<int, std::pair<int, int>> bestLenAtPos;
 		std::vector<std::string> bestCandidates;
 
 		for (auto it = rev.begin(); it != rev.end(); ++it) {
@@ -189,36 +189,49 @@ namespace {
 				l = 0;
 			}
 			if (l > 0) {
-				bestLenAtPos[i - l + 1] = l;
+				bestLenAtPos[i - l + 1] = { l, 0 };
 			}
 		}
 
+		int maxLen(0);
+		for (auto& posEntry : bestLenAtPos) {
+			auto pos = posEntry.first;
+			auto& lengthPair = posEntry.second;
+			l = lengthPair.first;
+			lengthPair.second = findPalindromeEnd(rev, pos + l);
+			maxLen = std::max(maxLen, 2*l + lengthPair.second);
+		}
+
+
+		// Again, removing the ones we don't need
+		for (auto it = bestLenAtPos.begin(); it != bestLenAtPos.end(); ) {
+			auto const& lengthPair = it->second;
+			
+			if ((2*lengthPair.first + lengthPair.second) < maxLen) {
+				it = bestLenAtPos.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+		
 		for (auto const& posEntry : bestLenAtPos) {
 			auto pos = posEntry.first;
-			l = posEntry.second;
+			auto const& lengthPair = posEntry.second;
+			l = lengthPair.first;
+			std::string result(2*l + lengthPair.second, ' ');
 			auto subStrBegin = next(rev.begin(), pos);
-			auto subStrEnd = next(subStrBegin, l);
-			std::string leftPalindrome(subStrBegin, subStrEnd);
-			std::string rightPalindrome(subStrBegin, subStrEnd);
-			std::reverse(rightPalindrome.begin(), rightPalindrome.end());
+			auto subStrEnd = next(subStrBegin, lengthPair.first);
 
-			//At the end of the left side, is there a single palindrome we can append?
-			auto extraPalindromeLen = findPalindromeEnd(rev, pos + l);
-			auto checkIter = next(rev.begin(), pos + l);
-			std::string result(leftPalindrome.size()*2 + extraPalindromeLen, ' ');
-			auto next = copy(leftPalindrome.begin(), leftPalindrome.end(), result.begin());
+			auto next = copy(subStrBegin, subStrEnd, result.begin());
 			// This will not do anything if there is no extra palindrome to append
-			next = std::copy(checkIter, std::next(checkIter, extraPalindromeLen), next);
-			copy(rightPalindrome.begin(), rightPalindrome.end(), next);
+			next = std::copy(subStrEnd, std::next(subStrEnd, lengthPair.second), next);
+			copy(subStrBegin, subStrEnd, next); // This copies the palindrome section from 'a', we have to reverse it
+			std::reverse(next, result.end());
 			bestCandidates.emplace_back(std::move(result));
 		}
 
-		std::sort(bestCandidates.begin(), bestCandidates.end(), [](auto const& a, auto const& b) {
-			if (a.size() != b.size()) {
-				return a.size() > b.size(); // Larger size comes first
-			}
-			return a < b; // Lexicographical order for same size
-			});
+		std::sort(bestCandidates.begin(), bestCandidates.end());
 
 		if (bestCandidates.empty())
 			return "-1";
