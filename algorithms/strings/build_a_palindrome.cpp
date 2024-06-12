@@ -165,6 +165,48 @@ namespace {
 		return std::distance(begin, end) + 1;
 	}
 
+	/*
+	int findPalindromeEnd(std::string const& rev, SuffixAutomaton const& sa, int start) {
+		SuffixAutomaton saRev(rev);
+
+		int maxLength = 0;
+		int endPos = start;
+
+		// Iterate over the substring starting at `start`
+		int v = 0, vRev = 0, length = 0;
+		for (int i = start; i < s.size(); ++i) {
+			char c = s[i];
+
+			// Traverse the original suffix automaton
+			while (v && !sa[v].next.count(c)) {
+				v = sa[v].link;
+				length = sa[v].length;
+			}
+			if (sa[v].next.count(c)) {
+				v = sa[v].next[c];
+				++length;
+			}
+
+			// Traverse the reversed suffix automaton
+			char cRev = rev[s.size() - 1 - i];
+			while (vRev && !saRev[vRev].next.count(cRev)) {
+				vRev = saRev[vRev].link;
+			}
+			if (saRev[vRev].next.count(cRev)) {
+				vRev = saRev[vRev].next[cRev];
+			}
+
+			// Check if the length matches and update maxLength and endPos
+			if (length > maxLength) {
+				maxLength = length;
+				endPos = i;
+			}
+		}
+
+		return endPos;
+	}
+	*/
+	}
 
 	std::string findPalindrome(std::string const& a, std::string const& b) {
 		SuffixAutomaton sa(a);
