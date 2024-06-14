@@ -115,7 +115,7 @@ namespace {
 			bestLen = length;
 		}
 		auto first = rev.begin();
-		auto last = next(rev.begin(), bestLen -1);
+		auto last =std::next(rev.begin(), bestLen -1);
 		bool ret(false);
 		while (first < last)
 		{
