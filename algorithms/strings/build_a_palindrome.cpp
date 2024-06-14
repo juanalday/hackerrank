@@ -84,23 +84,7 @@ namespace {
 			return *this;
 		}
 
-		void remove_last_state() {
-			if (m_last == 0) return; // No state to remove
-
-			int to_remove = m_last;
-
-			// Find the previous state that points to `to_remove`
-			for_each(m_states.begin(), m_states.end(), [&](auto& state) {state.m_edges.erase(m_last); });
-			m_states.pop_back();
-
-			// Update `last` to point to the appropriate previous state
-			for (auto it = m_states.rbegin(); it != m_states.rend(); ++it) {
-				if (it->m_edges.size() > 0) {
-					m_last = static_cast<int>(distance(it, m_states.rend()) - 1);
-					break;
-				}
-			}
-		}
+		
 		std::vector<State> m_states;
 		int m_last;
 	};
@@ -184,9 +168,7 @@ namespace {
 			debugPrefix.remove_prefix(pos);
 			std::string_view partialRevB{ revB };
 			partialRevB.remove_prefix(pos + l);
-			//SuffixAutomaton tmpS(partialRevB.rbegin(), partialRevB.rend());
 			lengthPair.second = findPalindromeEnd(partialRevB, shrinkingAutomaton);
-			shrinkingAutomaton.remove_last_state();
 			maxLen = std::max(maxLen, 2 * l + lengthPair.second);
 		}
 
@@ -249,14 +231,6 @@ namespace {
 	}
 }
 
-
-TEST(BuildPalindrome, SuffixAutomaton)
-{
-	//SuffixAutomaton s("jwgzcfabbkoxyjxkatjmpprswkdkobdagwdwxsufeesrvncbszcepigpbzuzoootorzfskcwbqorvw");
-	std::string t("skcwbqorvw");
-	SuffixAutomaton s(t);
-	s.remove_last_state();
-}
 
 TEST(BuildPalindrome, algo) {
 	EXPECT_EQ("ablilba", buildPalindrome("ab", "qlilbaz"));
