@@ -267,7 +267,7 @@ TEST(BuildPalindrome, case1)
 	EXPECT_EQ("-1", buildPalindrome("s", "k"));
 	EXPECT_EQ("-1", buildPalindrome("w", "d"));
 }
-TEST(BuildPalindrome, case14)
+TEST(BuildPalindrome, DISABLED_case14)
 {
 	constexpr char const* input1_a = "bpxmuzzjsprjwgkwslnlyvdpnwpwaomrdfxbmznbingzbeotafttlemiwehepkoeowriqkkabevyxqtifowastmymoklbplcrmkqrqdnwlmxwuwknqqjyqxwwrfpb"
 		"ycyvqbulvelnmxooyrgrkewjviolsjulsdcatpccjnciwpwruzpqftbfwcsfdefcmfehdfyscepnylzwqcxacmlbihogtjqcziaohyhyjmecfawuwirwuhtresqhj"

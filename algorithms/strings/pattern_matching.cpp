@@ -14,10 +14,6 @@ namespace {
         auto iterB = std::make_pair(B.begin(), B.end()); // pair for traverse and end of B
         auto wildcardIter = std::make_pair(B.end(), B.end()); // pair for the start of the wildcard and the end of the wildcard
 
-
-        iterB.first = std::find(iterB.first, iterB.second, '*');
-        std::advance(iterA.first, std::distance(B.begin(), iterB.first)); // Let's just move to the first wildcard.
-
         while (iterA.first != iterA.second) { // While I am not done with A
             // First let's loop while I am not done with B
             if (iterB.first != iterB.second && *iterB.first == *iterA.first) { //If the chars match
@@ -46,17 +42,22 @@ namespace {
 
 TEST(PatternMatching, example)
 {
-	EXPECT_EQ(match("abracadabra", "ab*c*d*abra"), 1);
-    EXPECT_EQ(match("abradacabra", "ab*c*d*abra"), 0);
+	EXPECT_EQ(1, match("abracadabra", "ab*c*d*abra"));
+    EXPECT_EQ(0, match("abradacabra", "ab*c*d*abra"));
 }
 
 TEST(PatternMatching, case0)
 {
-    EXPECT_EQ(match("abracadabra", "ab*c*d*abra"), 1);
+    EXPECT_EQ(1, match("abracadabra", "ab*c*d*abra"));
     
 }
 
 TEST(PatternMatching, case1)
 {
-    EXPECT_EQ(match("abradacabra", "ab*c*d*abra"), 0);
+    EXPECT_EQ(0, match("abradacabra", "ab*c*d*abra"));
+}
+
+TEST(PatternMatching, case2)
+{
+    EXPECT_EQ(0, match("aaa", "bbb"));
 }
